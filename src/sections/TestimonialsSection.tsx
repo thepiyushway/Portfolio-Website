@@ -9,10 +9,6 @@ export function TestimonialsSection() {
     <section id="testimonials" className="bg-slate-50 py-1.5">
       <div className="section-wrapper testimonials-section-wrapper py-1.5 md:py-2">
         <h2 className="mb-4 text-center text-3xl font-bold text-slate-900">What My Mentees and Colleagues Say</h2>
-        <p className="mx-auto mb-10 text-center text-lg leading-7 text-slate-600">
-          If you've worked with me and would like to share your feedback, please click here.
-        </p>
-
         <div className="relative overflow-hidden">
           <div className="testimonial-track flex w-max gap-6 pr-6">
             {doubledFeed.map((item, index) => (
@@ -24,7 +20,7 @@ export function TestimonialsSection() {
               >
                 <Card className="border border-slate-100 bg-surface-base/95 p-6 shadow-soft">
                   <blockquote className="flex min-h-52 flex-col">
-                    <p className="leading-7 text-text-secondary">“{item.quote}”</p>
+                    <p className="leading-7 text-text-secondary">&ldquo;{item.quote}&rdquo;</p>
                     <footer className="mt-auto pt-5 text-right text-sm font-semibold text-text-primary">- {item.name}</footer>
                   </blockquote>
                 </Card>
@@ -37,12 +33,24 @@ export function TestimonialsSection() {
           {testimonialFeed.slice(0, 3).map((item) => (
             <Card key={`mobile-${item.name}`} className="border border-slate-100 bg-surface-base/95 p-6">
               <blockquote className="flex min-h-48 flex-col">
-                <p className="leading-7 text-text-secondary">“{item.quote}”</p>
+                <p className="leading-7 text-text-secondary">&ldquo;{item.quote}&rdquo;</p>
                 <footer className="mt-auto pt-5 text-right text-sm font-semibold text-text-primary">- {item.name}</footer>
               </blockquote>
             </Card>
           ))}
         </div>
+
+        <p className="mt-6 text-center text-sm text-slate-400">
+          Have a feedback for me?{' '}
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdpJMwZJsFaG7WXWNMsQOItdl0NZHrVq8_3mjngVGPjR0iOFw/viewform?usp=preview"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-slate-600 transition-colors"
+          >
+            Click here to fill something like this.
+          </a>
+        </p>
       </div>
     </section>
   );
