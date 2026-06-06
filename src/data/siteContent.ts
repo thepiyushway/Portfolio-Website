@@ -62,89 +62,25 @@ export const hero = {
   ]
 };
 
-export const testimonials = [
-  {
-    name: 'Elena Rodriguez',
-    role: 'CTO @ Sunflare Analytics',
-    quote: 'The depth of knowledge in AI integration is unparalleled. Our product adoption increased by 42% after the consulting sprint.',
-    avatar: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80'
-  },
-  {
-    name: 'Marcus Thorne',
-    role: 'Product Lead @ NodeShift',
-    quote: 'Working alongside them on the architecture team was transformative. UX and ML ops are now a shared strategy.',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80'
-  },
-  {
-    name: 'James Wong',
-    role: 'Founder @ Nova Systems',
-    quote: 'Their practical AI roadmap helped us improve system reliability by 30% while scaling dev velocity across teams.',
-    avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=200&q=80'
-  }
-];
-
 export type Testimonial = {
   name: string;
-  role: string;
   quote: string;
-  avatar: string;
+  rating: number;
 };
 
-const feedbackSnippets = [
-  'Delivered practical architecture changes that improved shipping speed without sacrificing reliability.',
-  'A rare blend of product clarity and technical depth. The team executed with far more confidence.',
-  'The mentorship style is direct, actionable, and focused on real-world engineering outcomes.',
-  'Our AI roadmap finally became measurable and executable after this consulting partnership.',
-  'Excellent communication and decision-making frameworks during high-pressure releases.'
+export const testimonialFeed: Testimonial[] = [
+  { name: 'Amanpreet Kaur', quote: 'Very helpful mentorship with clear guidance on where and how to apply', rating: 5 },
+  { name: 'Preeti Sharma', quote: 'Very informative helped me in reshaping my resume as per industry standards', rating: 5 },
+  { name: 'Udit Gupta', quote: 'He clearly explains what to do and what not to do in real interviews', rating: 5 },
+  { name: 'Prasad Patil', quote: 'His answers to the doubts were very helpful and friendly throughout', rating: 5 },
+  { name: 'Aditya Chaudhary', quote: 'Big thanks for such a helpful and inspiring session! Learned a lot', rating: 5 },
+  { name: 'Shaina', quote: "They shared their experience and provided a DSA sheet that's helped me grow", rating: 5 },
+  { name: 'Nandhavarman G', quote: 'Very talented and well explained', rating: 5 },
+  { name: 'Abhirath', quote: 'Great list. Thanks :)', rating: 5 },
+  { name: 'Anonymous', quote: 'He answered all of my queries very patiently in a very insightful manner', rating: 5 },
+  { name: 'rohitjc', quote: 'Your insights and guidance have been truly impactful in shaping my perspective', rating: 5 },
+  { name: 'Pranav', quote: 'He is knowledgeable :)', rating: 5 },
 ];
-
-const avatarPool = [
-  'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
-  'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=200&q=80',
-  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80'
-];
-
-const names = [
-  'Elena Rodriguez',
-  'Marcus Thorne',
-  'James Wong',
-  'Nina Patel',
-  'Arjun Mehta',
-  'Sofia Park',
-  'Daniel Moore',
-  'Aisha Khan',
-  'Leo Turner',
-  'Maya Singh'
-];
-
-const roles = [
-  'CTO @ Sunflare Analytics',
-  'Product Lead @ NodeShift',
-  'Founder @ Nova Systems',
-  'VP Engineering @ Horizon Labs',
-  'Director of Platform @ Aeris',
-  'Head of Product @ AtlasAI',
-  'Staff Engineer @ Modulo',
-  'Engineering Manager @ CloudPeak',
-  'Principal Architect @ Riverline',
-  'Lead AI Engineer @ FluxWorks'
-];
-
-export const testimonialFeed: Testimonial[] = Array.from({ length: 25 }, (_, index) => {
-  const base = testimonials[index % testimonials.length];
-  const fallbackQuote = feedbackSnippets[index % feedbackSnippets.length];
-  const name = names[index % names.length];
-  const role = roles[index % roles.length];
-
-  return {
-    name: index < testimonials.length ? base.name : name,
-    role: index < testimonials.length ? base.role : role,
-    quote: index < testimonials.length ? base.quote : fallbackQuote,
-    avatar: avatarPool[index % avatarPool.length]
-  };
-});
 
 export const infoCards = [
   {
