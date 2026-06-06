@@ -26,7 +26,7 @@ export const socials = [
   {
     id: 'linkedin',
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/thepiyushway',
+    href: 'https://www.linkedin.com/in/thepiyushway/',
     description: 'Daily insights & career growth',
     cta: 'Connect',
     icon: 'linkedin'
@@ -34,7 +34,7 @@ export const socials = [
   {
     id: 'instagram',
     name: 'Instagram',
-    href: 'https://www.instagram.com/thepiyushway',
+    href: 'https://www.instagram.com/thepiyushway/',
     description: 'Visual AI experiments & creator stories',
     cta: 'Follow',
     icon: 'instagram'
@@ -42,8 +42,8 @@ export const socials = [
   {
     id: 'twitter',
     name: 'X / Twitter',
-    href: 'https://x.com/intent/follow?screen_name=thepiyushway',
-    description: 'Quick thoughts, threads, and engineering takes',
+    href: 'https://x.com/thepiyushway',
+    description: 'Quick thoughts, threads & engineering takes',
     cta: 'Follow',
     icon: 'twitter'
   }
@@ -85,7 +85,7 @@ export const siteConfig = {
     avatar: '/images/profile.jpg',
     stats: [
       { value: `${getCompletedYears(careerStartDate)}+`, label: 'Years of Experience' },
-      { value: '300+', label: 'Students Mentored' },
+      { value: '600+', label: 'Students Mentored' },
       { value: '50+', label: 'Projects Shipped' }
     ] as HeroStat[],
     workedWith: [
@@ -110,7 +110,7 @@ export const siteConfig = {
       },
       {
         name: 'LinkedIn',
-        href: 'https://www.linkedin.com/in/thepiyushway',
+        href: 'https://www.linkedin.com/in/thepiyushway/',
         label: 'Follow on LinkedIn',
         Icon: Linkedin,
         hoverClass:
@@ -118,7 +118,7 @@ export const siteConfig = {
       },
       {
         name: 'Instagram',
-        href: 'https://www.instagram.com/thepiyushway',
+        href: 'https://www.instagram.com/thepiyushway/',
         label: 'Follow on Instagram',
         Icon: Instagram,
         hoverClass:
@@ -126,7 +126,7 @@ export const siteConfig = {
       },
       {
         name: 'X / Twitter',
-        href: 'https://x.com/intent/follow?screen_name=thepiyushway',
+        href: 'https://x.com/thepiyushway',
         label: 'Follow on X / Twitter',
         Icon: Twitter,
         hoverClass:

@@ -5,7 +5,7 @@ import { TestimonialsSection } from './sections/TestimonialsSection';
 import { AboutSection } from './sections/AboutSection';
 import { ExperienceSection } from './sections/ExperienceSection';
 import { ProjectsSection } from './features/projects/ProjectsSection';
-import { CTASection } from './sections/CTASection';
+import { ServicesSection } from './sections/ServicesSection';
 import { ContactSection } from './features/contact/ContactSection';
 import { Footer } from './components/Footer';
 
@@ -64,7 +64,7 @@ function App() {
       <>
         <HeroSection />
         <TestimonialsSection />
-        <CTASection />
+        <ServicesSection />
       </>
     );
   }, [activeView]);

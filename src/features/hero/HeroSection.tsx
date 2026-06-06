@@ -14,7 +14,7 @@ const hero = siteConfig.hero;
 
 export function HeroSection() {
   return (
-    <section id="home" className="relative overflow-hidden pt-16 pb-4">
+    <section id="home" className="relative overflow-hidden pt-24 pb-4 sm:pt-28">
       <div className="pointer-events-none absolute inset-0 bg-radial-glow opacity-70" />
       <div className="pointer-events-none absolute -right-44 top-30 h-120 w-120 rounded-full bg-gradient-to-br from-brand-primary/20 via-transparent to-transparent blur-3xl" />
 
@@ -45,7 +45,7 @@ export function HeroSection() {
                 src={hero.avatar}
                 alt="Profile"
                 loading="lazy"
-                className="h-120 w-full object-cover transition duration-500 hover:scale-105"
+                className="h-72 w-full object-cover object-top transition duration-500 hover:scale-105 sm:h-96 lg:h-120"
               />
             </div>
           </div>
