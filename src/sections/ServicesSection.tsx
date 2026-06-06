@@ -217,7 +217,7 @@ function MentorshipCard() {
       <ul className="mb-8 space-y-3.5">
         {MENTORSHIP_ITEMS.map((item) => (
           <li key={item} className="flex items-center gap-3">
-            <CheckCircle2 size={18} className="shrink-0 text-brand-primary" />
+            <CheckCircle2 size={18} className="shrink-0 text-green-500" />
             <span className="text-sm font-medium text-slate-700">{item}</span>
           </li>
         ))}

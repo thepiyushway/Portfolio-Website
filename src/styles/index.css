@@ -87,10 +87,10 @@ textarea {
 
 @media (min-width: 768px) {
   .section-wrapper {
-    padding: 4rem 2rem;
+    /* padding: 4rem 2rem; */
   }
 
   .testimonials-section-wrapper {
-    padding: 3rem 1rem;
+    padding: 1.5rem 0.5rem;
   }
 }

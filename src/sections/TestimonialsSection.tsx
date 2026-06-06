@@ -48,7 +48,7 @@ export function TestimonialsSection() {
             rel="noopener noreferrer"
             className="underline underline-offset-2 hover:text-slate-600 transition-colors"
           >
-            Click here to fill something like this.
+            Click here to share it.
           </a>
         </p>
       </div>
