@@ -27,7 +27,6 @@ export function Footer() {
               <a href="#home"    className="transition-colors hover:text-brand-primary">Home</a>
               <a href="#about"   className="transition-colors hover:text-brand-primary">About</a>
               <a href="#work"    className="transition-colors hover:text-brand-primary">Work</a>
-              <a href="#contact" className="transition-colors hover:text-brand-primary">Contact</a>
             </nav>
 
             <div className="flex gap-3.5">

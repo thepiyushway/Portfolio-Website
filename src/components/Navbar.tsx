@@ -1,19 +1,30 @@
-import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Instagram, Linkedin, Menu, X, Youtube } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '../data/siteContent';
+import { socials } from '../config/site';
 
 const MAILTO_HREF = 'mailto:thepiyushway@gmail.com?subject=Let\'s%20Work%20Together&body=Hi%20Piyush%2C%0A%0AI\'d%20love%20to%20discuss%20a%20potential%20collaboration.%0A%0ABest%20regards';
+const RESUME_HREF = 'https://www.linkedin.com/in/thepiyushway/';
 
-const variants = {
+const SOCIAL_ICON_MAP = {
+  youtube:   { Icon: Youtube,   color: 'text-red-500',   bg: 'hover:bg-red-50' },
+  linkedin:  { Icon: Linkedin,  color: 'text-blue-600',  bg: 'hover:bg-blue-50' },
+  instagram: { Icon: Instagram, color: 'text-pink-500',  bg: 'hover:bg-pink-50' },
+  twitter:   { Icon: X,         color: 'text-slate-700', bg: 'hover:bg-slate-100' },
+} as const;
+
+const mobileVariants = {
   open: { opacity: 1, y: 0, transition: { staggerChildren: 0.05 } },
-  closed: { opacity: 0, y: -10 }
+  closed: { opacity: 0, y: -10 },
 };
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [active, setActive] = useState('home');
+  const [contentOpen, setContentOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 26);
@@ -27,10 +38,24 @@ export function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!contentOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
+        setContentOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [contentOpen]);
+
   const handleLinkClick = (value?: string) => {
     setMobileOpen(false);
+    setContentOpen(false);
     if (value) setActive(value);
   };
+
+  const contentSocials = socials.filter((s) => s.id in SOCIAL_ICON_MAP);
 
   return (
     <header
@@ -61,7 +86,9 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => {
-            const activeClass = active === link.id ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200' : 'text-slate-600 hover:bg-blue-50 hover:text-brand-700';
+            const activeClass = active === link.id
+              ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200'
+              : 'text-slate-600 hover:bg-blue-50 hover:text-brand-700';
             return (
               <a
                 key={link.id}
@@ -75,6 +102,48 @@ export function Navbar() {
             );
           })}
 
+          {/* Content dropdown */}
+          <div className="relative" ref={contentRef}>
+            <button
+              onClick={() => setContentOpen((prev) => !prev)}
+              className={`rounded-full px-4 py-2 !text-sm !font-medium !leading-5 transition ${
+                contentOpen ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200' : 'text-slate-600 hover:bg-blue-50 hover:text-brand-700'
+              }`}
+              aria-expanded={contentOpen}
+            >
+              Content
+            </button>
+
+            <AnimatePresence>
+              {contentOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-slate-100 bg-white p-2 shadow-lg"
+                >
+                  {contentSocials.map(({ id, name, href }) => {
+                    const { Icon, color, bg } = SOCIAL_ICON_MAP[id as keyof typeof SOCIAL_ICON_MAP];
+                    return (
+                      <a
+                        key={id}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setContentOpen(false)}
+                        className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${color} ${bg} transition`}
+                      >
+                        <Icon size={16} />
+                        {name}
+                      </a>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <div className="ml-2 flex items-center gap-2 border-l border-slate-200 pl-3">
             <a
               href={MAILTO_HREF}
@@ -83,8 +152,9 @@ export function Navbar() {
               Hire Me
             </a>
             <a
-              href="#contact"
-              onClick={() => handleLinkClick('contact')}
+              href={RESUME_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
             >
               Resume/CV
@@ -108,7 +178,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            variants={variants}
+            variants={mobileVariants}
           >
             <ul className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -123,6 +193,31 @@ export function Navbar() {
                 </motion.li>
               ))}
 
+              {/* Content social links */}
+              <motion.li>
+                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                  Content
+                </p>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {contentSocials.map(({ id, name, href }) => {
+                    const { Icon, color, bg } = SOCIAL_ICON_MAP[id as keyof typeof SOCIAL_ICON_MAP];
+                    return (
+                      <a
+                        key={id}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium ${color} ${bg} transition`}
+                      >
+                        <Icon size={15} />
+                        {name}
+                      </a>
+                    );
+                  })}
+                </div>
+              </motion.li>
+
               <motion.li whileTap={{ scale: 0.97 }} className="mt-2 grid grid-cols-2 gap-2">
                 <a
                   href={MAILTO_HREF}
@@ -131,8 +226,9 @@ export function Navbar() {
                   Hire Me
                 </a>
                 <a
-                  href="#contact"
-                  onClick={() => handleLinkClick('contact')}
+                  href={RESUME_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
                 >
                   Resume/CV

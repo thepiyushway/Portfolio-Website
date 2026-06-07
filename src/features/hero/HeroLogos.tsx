@@ -14,8 +14,8 @@ type HeroLogosProps = {
 function HeroLogosBase({ companies }: HeroLogosProps) {
   return (
     <motion.div variants={fadeInUp} className="mb-8">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Worked with</p>
-      <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-x-8" aria-label="Companies worked with">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Worked at</p>
+      <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-x-8" aria-label="Companies worked at">
         {companies.map((company) => (
           <li key={company.name} className="flex items-center">
             <img

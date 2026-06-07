@@ -6,15 +6,14 @@ import { AboutSection } from './sections/AboutSection';
 import { ExperienceSection } from './sections/ExperienceSection';
 import { ProjectsSection } from './features/projects/ProjectsSection';
 import { ServicesSection } from './sections/ServicesSection';
-import { ContactSection } from './features/contact/ContactSection';
 import { Footer } from './components/Footer';
 
-type ViewId = 'home' | 'about' | 'work' | 'contact';
+type ViewId = 'home' | 'about' | 'work';
 
 function getViewFromHash(hash: string): ViewId {
   const value = hash.replace('#', '');
 
-  if (value === 'about' || value === 'work' || value === 'contact') {
+  if (value === 'about' || value === 'work') {
     return value;
   }
 
@@ -54,10 +53,6 @@ function App() {
           <ProjectsSection />
         </>
       );
-    }
-
-    if (activeView === 'contact') {
-      return <ContactSection />;
     }
 
     return (
