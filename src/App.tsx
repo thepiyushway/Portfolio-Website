@@ -65,9 +65,9 @@ function App() {
   }, [activeView]);
 
   return (
-    <div className="scroll-smooth bg-grid-pattern bg-grid-offset bg-no-repeat">
+    <div className="flex min-h-screen scroll-smooth flex-col bg-grid-pattern bg-grid-offset bg-no-repeat">
       <Navbar />
-      <main>{content}</main>
+      <main className="flex-1">{content}</main>
       <Footer />
     </div>
   );
