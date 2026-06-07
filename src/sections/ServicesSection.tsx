@@ -5,6 +5,7 @@ import {
   BrainCircuit,
   CheckCircle2,
   Cpu,
+  Eye,
   Heart,
   Layers,
   type LucideIcon,
@@ -49,8 +50,6 @@ const COMMUNITY_POSTS = [
       { icon: Play, value: '13K' },
       { icon: MessageCircle, value: '17K' },
     ],
-    brandBg: 'bg-red-50',
-    brandText: 'text-red-600',
   },
   {
     platform: 'Instagram' as const,
@@ -61,20 +60,16 @@ const COMMUNITY_POSTS = [
       { icon: Heart, value: '158' },
       { icon: MessageCircle, value: '55K' },
     ],
-    brandBg: 'bg-pink-50',
-    brandText: 'text-pink-600',
   },
   {
     platform: 'LinkedIn' as const,
     url: 'https://www.linkedin.com/feed/update/urn:li:activity:7032364448006754304/',
-    staticThumbnail: null,
+    staticThumbnail: '/images/linkedin-profile.png',
     title: "Piyush's latest article on engineering leadership — practical, national engineering leadership and beyond.",
     stats: [
       { icon: ThumbsUp, value: '131' },
       { icon: MessageCircle, value: '35' },
     ],
-    brandBg: 'bg-blue-50',
-    brandText: 'text-blue-700',
   },
 ] as const;
 
@@ -110,13 +105,17 @@ function useMicrolinkData(url: string | null) {
 }
 
 // Instagram's own OG description always reads "<likes> likes, <comments> comments
-// - <username> on <date>: "<caption>"" — pull the three numbers/text out of it.
+// - <username> on <date>: "<caption>"" — video/reel posts prefix it with a view
+// count ("<views> views, <likes> likes, ..."), so capture that group too when present.
 function parseInstagramDescription(description: string | null) {
-  const match = description?.match(/^([\d,]+)\s+likes?,\s*([\d,]+)\s+comments?\s*-[^:]*:\s*([\s\S]*)$/);
-  if (!match) return { likes: null, comments: null, caption: null };
+  const match = description?.match(
+    /^(?:([\d,]+)\s+views?,\s*)?([\d,]+)\s+likes?,\s*([\d,]+)\s+comments?\s*-[^:]*:\s*([\s\S]*)$/,
+  );
+  if (!match) return { views: null, likes: null, comments: null, caption: null };
 
-  const [, likes, comments, rawCaption] = match;
+  const [, views, likes, comments, rawCaption] = match;
   return {
+    views: views ? Number(views.replace(/,/g, '')) : null,
     likes: Number(likes.replace(/,/g, '')),
     comments: Number(comments.replace(/,/g, '')),
     caption: rawCaption.trim().replace(/^[“”"]+|[“”".]+$/g, '') || null,
@@ -242,11 +241,9 @@ function FallbackGradient({ platform }: { platform: Post['platform'] }) {
 
 function PlatformBadge({ post }: { post: Post }) {
   return (
-    <div
-      className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${post.brandBg} ${post.brandText}`}
-    >
-      <img src={PLATFORM_LOGOS[post.platform]} alt="" className="h-4 w-4 rounded-sm object-contain" />
-      {post.platform}
+    <div className="inline-flex w-fit items-center gap-2">
+      <img src={PLATFORM_LOGOS[post.platform]} alt="" className="h-6 w-6 rounded-md object-contain" />
+      <span className="text-sm font-semibold text-slate-900">{post.platform}</span>
     </div>
   );
 }
@@ -283,6 +280,9 @@ function ContentCard({
 }) {
   const src = post.staticThumbnail ?? image;
   const isYouTube = post.platform === 'YouTube';
+  // The LinkedIn card uses our own profile screenshot rather than a cropped
+  // video/post thumbnail — show it in full instead of cropping to fill.
+  const fit = 'object-cover';
 
   return (
     <motion.a
@@ -292,7 +292,11 @@ function ContentCard({
       rel="noopener noreferrer"
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
     >
-      <div className="relative h-28 shrink-0 overflow-hidden bg-slate-100 sm:h-32">
+      <div className="px-4 pt-3.5">
+        <PlatformBadge post={post} />
+      </div>
+
+      <div className="relative mt-3 h-44 shrink-0 overflow-hidden bg-slate-100 sm:h-52">
         {loading ? (
           <div className="h-full w-full animate-pulse bg-slate-200" />
         ) : src ? (
@@ -300,7 +304,7 @@ function ContentCard({
             <img
               src={src}
               alt={title}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className={`h-full w-full ${fit} transition-transform duration-500 group-hover:scale-105`}
             />
             {isYouTube && (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -316,10 +320,58 @@ function ContentCard({
       </div>
 
       <div className="flex flex-1 flex-col gap-2 px-4 py-3.5">
-        <PlatformBadge post={post} />
         <p className="line-clamp-2 text-sm font-medium leading-5 text-slate-800">{title}</p>
         <div className="mt-auto">
           <Stats stats={stats} />
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
+// Instagram-only layout: cover image and caption sit side by side, with
+// engagement stats spanning the row beneath them.
+function InstagramCard({
+  post,
+  image,
+  loading,
+  title,
+  stats,
+}: {
+  post: Post;
+  image: string | null;
+  loading: boolean;
+  title: string;
+  stats: readonly StatItem[];
+}) {
+  return (
+    <motion.a
+      variants={cardVariant}
+      href={post.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
+    >
+      <div className="px-4 pt-3.5">
+        <PlatformBadge post={post} />
+      </div>
+
+      <div className="mt-3 flex flex-1 gap-4 px-4 pb-3.5">
+        <div className="relative aspect-square w-1/2 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+          {loading ? (
+            <div className="h-full w-full animate-pulse bg-slate-200" />
+          ) : image ? (
+            <img src={image} alt={title} className="h-full w-full object-contain" />
+          ) : (
+            <FallbackGradient platform={post.platform} />
+          )}
+        </div>
+
+        <div className="flex flex-1 flex-col gap-2">
+          <p className="line-clamp-6 text-sm leading-5 text-slate-700 sm:line-clamp-[8]">{title}</p>
+          <div className="mt-auto">
+            <Stats stats={stats} />
+          </div>
         </div>
       </div>
     </motion.a>
@@ -334,17 +386,19 @@ function CommunityCard({ post }: { post: Post }) {
     return <ContentCard post={post} image={image} loading={needsFetch && loading} title={post.title} stats={post.stats} />;
   }
 
-  // Instagram: prefer the live caption/like/comment counts pulled from the
-  // post's own OG description, falling back to the static placeholders until
-  // (or unless) that fetch resolves.
-  const { likes, comments, caption } = parseInstagramDescription(description);
+  // Instagram: prefer the live view/like/comment counts and caption pulled from
+  // the post's own OG description, falling back to the static placeholders
+  // until (or unless) that fetch resolves. Views only surface for video/reel
+  // posts, so the stat is omitted entirely when the description has none.
+  const { views, likes, comments, caption } = parseInstagramDescription(description);
   const title = caption ?? post.title;
   const stats: StatItem[] = [
+    ...(views !== null ? [{ icon: Eye, value: String(views) }] : []),
     { icon: Heart, value: String(likes ?? post.stats[0].value) },
     { icon: MessageCircle, value: String(comments ?? post.stats[1].value) },
   ];
 
-  return <ContentCard post={post} image={image} loading={loading} title={title} stats={stats} />;
+  return <InstagramCard post={post} image={image} loading={loading} title={title} stats={stats} />;
 }
 
 // ─── main export ───────────────────────────────────────────────────────────────
