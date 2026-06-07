@@ -43,8 +43,9 @@ const COMMUNITY_POSTS = [
   {
     platform: 'YouTube' as const,
     url: 'https://www.youtube.com/watch?v=XIM_nbXESho',
-    // YouTube has a reliable public thumbnail CDN — no fetch needed
-    staticThumbnail: 'https://img.youtube.com/vi/XIM_nbXESho/hqdefault.jpg',
+    // Shown until the live "latest upload" fetch resolves (or if the YouTube
+    // Data API key is missing/the request fails) — see useLatestYoutubeVideo.
+    staticThumbnail: '/images/youtube-fallback.jpg',
     title: 'System Design & AI Breakdown',
     stats: [
       { icon: Play, value: '13K' },
@@ -73,7 +74,41 @@ const COMMUNITY_POSTS = [
   },
 ] as const;
 
+// ─── localStorage response cache ──────────────────────────────────────────────
+
+// The microlink and YouTube lookups below both run client-side against
+// rate-limited free-tier APIs (50 req/day, and a fixed daily quota,
+// respectively) — shared across every visitor. Cache successful responses in
+// localStorage so repeat visits within the TTL reuse cached data instead of
+// burning through the quota.
+const RESPONSE_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+
+type CacheEntry<T> = { value: T; cachedAt: number };
+
+function readCache<T>(key: string): T | null {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const entry: CacheEntry<T> = JSON.parse(raw);
+    if (Date.now() - entry.cachedAt > RESPONSE_CACHE_TTL_MS) return null;
+    return entry.value;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache<T>(key: string, value: T) {
+  try {
+    const entry: CacheEntry<T> = { value, cachedAt: Date.now() };
+    localStorage.setItem(key, JSON.stringify(entry));
+  } catch {
+    // Storage unavailable or full — fall back silently to live fetches.
+  }
+}
+
 // ─── microlink hook ────────────────────────────────────────────────────────────
+
+type MicrolinkData = { image: string | null; description: string | null };
 
 function useMicrolinkData(url: string | null) {
   const [image, setImage] = useState<string | null>(null);
@@ -83,6 +118,15 @@ function useMicrolinkData(url: string | null) {
   useEffect(() => {
     if (!url) return;
 
+    const cacheKey = `microlink:${url}`;
+    const cached = readCache<MicrolinkData>(cacheKey);
+    if (cached) {
+      setImage(cached.image);
+      setDescription(cached.description);
+      setLoading(false);
+      return;
+    }
+
     const controller = new AbortController();
 
     fetch(`https://api.microlink.io?url=${encodeURIComponent(url)}`, {
@@ -91,8 +135,13 @@ function useMicrolinkData(url: string | null) {
       .then((r) => r.json())
       .then((res) => {
         if (res.status === 'success') {
-          setImage(res.data?.image?.url ?? null);
-          setDescription(res.data?.description ?? null);
+          const data: MicrolinkData = {
+            image: res.data?.image?.url ?? null,
+            description: res.data?.description ?? null,
+          };
+          setImage(data.image);
+          setDescription(data.description);
+          writeCache(cacheKey, data);
         }
       })
       .catch(() => {})
@@ -102,6 +151,95 @@ function useMicrolinkData(url: string | null) {
   }, [url]);
 
   return { image, description, loading };
+}
+
+// ─── YouTube latest-upload hook ────────────────────────────────────────────────
+
+const YOUTUBE_CHANNEL_ID = 'UCwAm47rI_cqAj4gPBX_idWg'; // @thepiyushway
+// Every channel's uploads are mirrored into a playlist whose ID is just the
+// channel ID with its "UC" prefix swapped for "UU" — fetching that playlist's
+// newest item costs 1 quota unit, versus 100 for search.list.
+const YOUTUBE_UPLOADS_PLAYLIST_ID = `UU${YOUTUBE_CHANNEL_ID.slice(2)}`;
+const YOUTUBE_CACHE_KEY = 'youtube:latest-upload';
+
+type YoutubeVideo = {
+  url: string;
+  title: string;
+  thumbnail: string;
+  views: number;
+  likes: number;
+  comments: number;
+};
+
+function formatCount(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 ? 1 : 0)}K`;
+  return String(n);
+}
+
+function useLatestYoutubeVideo() {
+  const [video, setVideo] = useState<YoutubeVideo | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const cached = readCache<YoutubeVideo>(YOUTUBE_CACHE_KEY);
+    if (cached) {
+      setVideo(cached);
+      setLoading(false);
+      return;
+    }
+
+    const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+    if (!apiKey) {
+      setLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const base = 'https://www.googleapis.com/youtube/v3';
+    const query = (params: Record<string, string>) =>
+      new URLSearchParams({ key: apiKey, ...params }).toString();
+
+    (async () => {
+      try {
+        const playlist = await fetch(
+          `${base}/playlistItems?${query({ playlistId: YOUTUBE_UPLOADS_PLAYLIST_ID, part: 'snippet', maxResults: '1' })}`,
+          { signal: controller.signal },
+        ).then((r) => r.json());
+
+        const videoId: string | undefined = playlist?.items?.[0]?.snippet?.resourceId?.videoId;
+        if (!videoId) return;
+
+        const videos = await fetch(
+          `${base}/videos?${query({ id: videoId, part: 'snippet,statistics' })}`,
+          { signal: controller.signal },
+        ).then((r) => r.json());
+
+        const item = videos?.items?.[0];
+        if (!item) return;
+
+        const next: YoutubeVideo = {
+          url: `https://www.youtube.com/watch?v=${videoId}`,
+          title: item.snippet?.title ?? 'Latest video',
+          thumbnail: item.snippet?.thumbnails?.high?.url ?? item.snippet?.thumbnails?.medium?.url ?? '',
+          views: Number(item.statistics?.viewCount ?? 0),
+          likes: Number(item.statistics?.likeCount ?? 0),
+          comments: Number(item.statistics?.commentCount ?? 0),
+        };
+
+        setVideo(next);
+        writeCache(YOUTUBE_CACHE_KEY, next);
+      } catch {
+        // Network error/abort — keep the static fallback.
+      } finally {
+        setLoading(false);
+      }
+    })();
+
+    return () => controller.abort();
+  }, []);
+
+  return { video, loading };
 }
 
 // Instagram's own OG description always reads "<likes> likes, <comments> comments
@@ -239,11 +377,11 @@ function FallbackGradient({ platform }: { platform: Post['platform'] }) {
   );
 }
 
-function PlatformBadge({ post }: { post: Post }) {
+function PlatformBadge({ platform }: { platform: Post['platform'] }) {
   return (
     <div className="inline-flex w-fit items-center gap-2">
-      <img src={PLATFORM_LOGOS[post.platform]} alt="" className="h-6 w-6 rounded-md object-contain" />
-      <span className="text-sm font-semibold text-slate-900">{post.platform}</span>
+      <img src={PLATFORM_LOGOS[platform]} alt="" className="h-8 w-8 rounded-md object-contain" />
+      <span className="text-lg font-semibold text-slate-900">{platform}</span>
     </div>
   );
 }
@@ -263,6 +401,11 @@ function Stats({ stats }: { stats: readonly StatItem[] }) {
   );
 }
 
+// Structural shape ContentCard needs — looser than Post so callers (e.g. the
+// YouTube card) can override `url`/`staticThumbnail` with live data without
+// fighting Post's const-asserted literal types.
+type CardPost = { platform: Post['platform']; url: string; staticThumbnail: string | null };
+
 // Single shared layout for every platform: compact thumbnail strip on top,
 // caption + engagement below — keeps all three cards the same height & weight.
 function ContentCard({
@@ -272,13 +415,15 @@ function ContentCard({
   title,
   stats,
 }: {
-  post: Post;
+  post: CardPost;
   image: string | null;
   loading: boolean;
   title: string;
   stats: readonly StatItem[];
 }) {
-  const src = post.staticThumbnail ?? image;
+  // Live data wins when available (e.g. the fetched video's own thumbnail);
+  // the static asset is the fallback shown until then or if the fetch fails.
+  const src = image ?? post.staticThumbnail;
   const isYouTube = post.platform === 'YouTube';
   // The LinkedIn card uses our own profile screenshot rather than a cropped
   // video/post thumbnail — show it in full instead of cropping to fill.
@@ -293,7 +438,7 @@ function ContentCard({
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
     >
       <div className="px-4 pt-3.5">
-        <PlatformBadge post={post} />
+        <PlatformBadge platform={post.platform} />
       </div>
 
       <div className="relative mt-3 h-44 shrink-0 overflow-hidden bg-slate-100 sm:h-52">
@@ -353,7 +498,7 @@ function InstagramCard({
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
     >
       <div className="px-4 pt-3.5">
-        <PlatformBadge post={post} />
+        <PlatformBadge platform={post.platform} />
       </div>
 
       <div className="mt-3 flex flex-1 gap-4 px-4 pb-3.5">
@@ -378,7 +523,42 @@ function InstagramCard({
   );
 }
 
+// YouTube: pull the channel's newest upload from the Data API (thumbnail,
+// title, view/like/comment counts) and override the static placeholder with
+// it once it resolves — the static config stays as the fallback shown until
+// then, or permanently if the API key is absent or the fetch fails.
+function YoutubeCommunityCard({ post }: { post: Extract<Post, { platform: 'YouTube' }> }) {
+  const { video, loading } = useLatestYoutubeVideo();
+
+  const cardPost: CardPost = {
+    platform: 'YouTube',
+    url: video?.url ?? post.url,
+    staticThumbnail: post.staticThumbnail,
+  };
+  const stats: readonly StatItem[] = video
+    ? [
+        { icon: Play, value: formatCount(video.views) },
+        { icon: ThumbsUp, value: formatCount(video.likes) },
+        { icon: MessageCircle, value: formatCount(video.comments) },
+      ]
+    : post.stats;
+
+  return (
+    <ContentCard
+      post={cardPost}
+      image={video?.thumbnail ?? null}
+      loading={loading}
+      title={video?.title ?? post.title}
+      stats={stats}
+    />
+  );
+}
+
 function CommunityCard({ post }: { post: Post }) {
+  if (post.platform === 'YouTube') {
+    return <YoutubeCommunityCard post={post} />;
+  }
+
   const needsFetch = post.staticThumbnail === null;
   const { image, description, loading } = useMicrolinkData(needsFetch ? post.url : null);
 
