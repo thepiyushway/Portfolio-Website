@@ -385,8 +385,8 @@ export function ServicesSection() {
   return (
     <>
       {/* Services */}
-      <section className="bg-slate-50 py-8 md:py-12">
-        <div className="section-wrapper">
+      <section className="bg-slate-50 py-0">
+        <div className="section-wrapper pt-0">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -414,7 +414,7 @@ export function ServicesSection() {
       </section>
 
       {/* Community */}
-      <section className="bg-white py-8 md:py-10">
+      <section className="bg-white py-0">
         <div className="section-wrapper">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

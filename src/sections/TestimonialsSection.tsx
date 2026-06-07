@@ -92,7 +92,7 @@ export function TestimonialsSection() {
           ))}
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="text-center text-sm text-slate-400 py-2">
           Have a feedback for me?{' '}
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSdpJMwZJsFaG7WXWNMsQOItdl0NZHrVq8_3mjngVGPjR0iOFw/viewform?usp=preview"
