@@ -18,8 +18,7 @@ import { Button } from '../components/ui/Button';
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
-const STRATEGY_CALL_URL =
-  'https://topmate.io/thepiyushway/150245?utm_source=public_profile&utm_campaign=thepiyushway';
+const STRATEGY_CALL_URL = 'https://calendly.com/thepiyushway/30min';
 const MENTORSHIP_URL = 'https://topmate.io/thepiyushway';
 
 const AI_CONSULTING_ITEMS = [

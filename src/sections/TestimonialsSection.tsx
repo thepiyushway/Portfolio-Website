@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { testimonialFeed } from '../data/siteContent';
 import { Card } from '../components/Card';
+import { useTestimonials } from '../hooks/useTestimonials';
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -43,10 +44,10 @@ function TestimonialCard({ item, colorIndex }: { item: (typeof testimonialFeed)[
     <Card className="border border-slate-100 bg-surface-base/95 p-6 shadow-soft flex flex-col h-full">
       <StarRating rating={item.rating} />
 
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden min-h-0">
         <span className="text-4xl leading-none text-slate-200 font-serif select-none">&ldquo;</span>
         {item.quote ? (
-          <p className="text-sm leading-6 text-text-secondary -mt-2">{item.quote}</p>
+          <p className="text-sm leading-6 text-text-secondary -mt-2 line-clamp-4">{item.quote}</p>
         ) : (
           <p className="text-sm leading-6 text-slate-400 italic -mt-2">No written feedback shared.</p>
         )}
@@ -63,7 +64,8 @@ function TestimonialCard({ item, colorIndex }: { item: (typeof testimonialFeed)[
 }
 
 export function TestimonialsSection() {
-  const doubledFeed = [...testimonialFeed, ...testimonialFeed];
+  const feed = useTestimonials(testimonialFeed);
+  const doubledFeed = [...feed, ...feed];
 
   return (
     <section id="testimonials" className="bg-slate-50 py-1.5">
@@ -76,7 +78,7 @@ export function TestimonialsSection() {
                 key={`${item.name}-${index}`}
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.25 }}
-                className="w-80 shrink-0 sm:w-96"
+                className="w-80 shrink-0 sm:w-96 h-76"
               >
                 <TestimonialCard item={item} colorIndex={index % testimonialFeed.length} />
               </motion.div>
@@ -85,7 +87,7 @@ export function TestimonialsSection() {
         </div>
 
         <div className="mt-8 grid gap-6 md:hidden" aria-hidden="true">
-          {testimonialFeed.slice(0, 3).map((item, index) => (
+          {feed.slice(0, 3).map((item, index) => (
             <TestimonialCard key={`mobile-${item.name}`} item={item} colorIndex={index} />
           ))}
         </div>

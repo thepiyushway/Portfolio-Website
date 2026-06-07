@@ -62,7 +62,7 @@ textarea {
 }
 
 .testimonial-track {
-  animation: testimonial-marquee 104s linear infinite;
+  animation: testimonial-marquee 160s linear infinite;
 }
 
 .testimonial-track:hover {
