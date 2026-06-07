@@ -652,14 +652,8 @@ export function ServicesSection() {
             transition={{ duration: 0.4, delay: 0.25, ease }}
             className="mt-8 flex justify-center"
           >
-            <Button
-              href="https://topmate.io/thepiyushway"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="primary"
-              size="lg"
-            >
-              Explore My Content
+            <Button href="#work" variant="primary" size="lg">
+              Explore My Work
             </Button>
           </motion.div>
         </div>
