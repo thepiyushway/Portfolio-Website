@@ -94,7 +94,7 @@ export const siteConfig = {
       { name: 'Kotak Mahindra Bank', logo: '/logos/kotak-mahindra-bank-logo.png' }
     ] as HeroCompany[],
     cta: {
-      primary: { label: 'Book a Strategy Call', href: 'https://topmate.io/thepiyushway' },
+      primary: { label: 'Book a Strategy Call', href: 'https://calendly.com/thepiyushway/30min' },
       secondary: { label: 'Get Mentored', href: 'https://topmate.io/thepiyushway' }
     },
     socialPrompt: 'Join 45k+ developers learning full-stack development and AI',

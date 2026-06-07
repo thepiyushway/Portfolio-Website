@@ -52,16 +52,6 @@ const COMMUNITY_POSTS = [
     stats: [{ icon: Users, value: '805' }],
   },
   {
-    platform: 'Instagram' as const,
-    url: 'https://www.instagram.com/p/DExTk-ph8Kw/?img_index=1',
-    staticThumbnail: null,
-    title: 'Visual AI experiments & creator stories',
-    stats: [
-      { icon: Heart, value: '158' },
-      { icon: MessageCircle, value: '55K' },
-    ],
-  },
-  {
     platform: 'LinkedIn' as const,
     url: 'https://www.linkedin.com/feed/update/urn:li:activity:7032364448006754304/',
     staticThumbnail: '/images/linkedin-profile.png',
@@ -71,6 +61,17 @@ const COMMUNITY_POSTS = [
       { icon: MessageCircle, value: '35' },
     ],
   },
+  {
+    platform: 'Instagram' as const,
+    url: 'https://www.instagram.com/p/DExTk-ph8Kw/?img_index=1',
+    staticThumbnail: null,
+    title: 'Visual AI experiments & creator stories',
+    stats: [
+      { icon: Heart, value: '158' },
+      { icon: MessageCircle, value: '55K' },
+    ],
+  },
+  
 ] as const;
 
 // ─── localStorage response cache ──────────────────────────────────────────────

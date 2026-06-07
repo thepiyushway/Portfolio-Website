@@ -14,7 +14,13 @@ export function CTASection() {
             <li className="flex gap-3"><Globe size={20} className="text-cyan-300" /> Systems architecture resilience</li>
             <li className="flex gap-3"><BookOpen size={20} className="text-cyan-300" /> ROI-driven implementation sprints</li>
           </ul>
-          <Button onClick={() => window.location.assign('#contact')} className="text-sm" variant="primary">
+          <Button
+            href="https://calendly.com/thepiyushway/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm"
+            variant="primary"
+          >
             Book a Strategy Call <ArrowRight size={16} />
           </Button>
         </motion.div>
