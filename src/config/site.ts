@@ -1,4 +1,4 @@
-import { type LucideIcon, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { SOCIAL_LOGOS } from '../lib/socialLogos';
 
 function getCompletedYears(startDate: Date): number {
   const today = new Date();
@@ -68,8 +68,7 @@ type HeroSocialLink = {
   name: string;
   href: string;
   label: string;
-  Icon: LucideIcon;
-  hoverClass: string;
+  logo: string;
 };
 
 export const siteConfig = {
@@ -104,33 +103,25 @@ export const siteConfig = {
         name: 'YouTube',
         href: 'https://www.youtube.com/@ThePiyushWay?sub_confirmation=1',
         label: 'Follow on YouTube',
-        Icon: Youtube,
-        hoverClass:
-          'hover:border-red-300 hover:bg-red-50 hover:text-red-600 hover:shadow-[0_18px_36px_rgba(239,68,68,0.18)] focus-visible:border-red-300 focus-visible:bg-red-50 focus-visible:text-red-600'
+        logo: SOCIAL_LOGOS.youtube
       },
       {
         name: 'LinkedIn',
         href: 'https://www.linkedin.com/in/thepiyushway/',
         label: 'Follow on LinkedIn',
-        Icon: Linkedin,
-        hoverClass:
-          'hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600 hover:shadow-[0_18px_36px_rgba(0,99,194,0.18)] focus-visible:border-blue-300 focus-visible:bg-blue-50 focus-visible:text-blue-600'
+        logo: SOCIAL_LOGOS.linkedin
       },
       {
         name: 'Instagram',
         href: 'https://www.instagram.com/thepiyushway/',
         label: 'Follow on Instagram',
-        Icon: Instagram,
-        hoverClass:
-          'hover:border-pink-300 hover:bg-pink-50 hover:text-pink-500 hover:shadow-[0_18px_36px_rgba(236,72,153,0.18)] focus-visible:border-pink-300 focus-visible:bg-pink-50 focus-visible:text-pink-500'
+        logo: SOCIAL_LOGOS.instagram
       },
       {
         name: 'X / Twitter',
         href: 'https://x.com/thepiyushway',
         label: 'Follow on X / Twitter',
-        Icon: Twitter,
-        hoverClass:
-          'hover:border-sky-300 hover:bg-sky-50 hover:text-sky-600 hover:shadow-[0_18px_36px_rgba(14,165,233,0.18)] focus-visible:border-sky-300 focus-visible:bg-sky-50 focus-visible:text-sky-600'
+        logo: SOCIAL_LOGOS.twitter
       }
     ] as HeroSocialLink[],
     subscribe: {

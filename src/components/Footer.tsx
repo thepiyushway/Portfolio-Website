@@ -1,12 +1,5 @@
-import { Instagram, Linkedin, X, Youtube } from 'lucide-react';
 import { socials } from '../config/site';
-
-const SOCIAL_ICONS = {
-  youtube: { Icon: Youtube, hover: 'hover:text-red-500' },
-  linkedin: { Icon: Linkedin, hover: 'hover:text-blue-600' },
-  instagram: { Icon: Instagram, hover: 'hover:text-pink-500' },
-  twitter: { Icon: X, hover: 'hover:text-slate-900' },
-} as const;
+import { SOCIAL_LOGOS } from '../lib/socialLogos';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -31,9 +24,8 @@ export function Footer() {
 
             <div className="flex gap-3.5">
               {socials.map(({ id, name, href }) => {
-                const entry = SOCIAL_ICONS[id as keyof typeof SOCIAL_ICONS];
-                if (!entry) return null;
-                const { Icon, hover } = entry;
+                const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
+                if (!logo) return null;
                 return (
                   <a
                     key={id}
@@ -41,9 +33,9 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={name}
-                    className={`text-slate-400 transition-colors ${hover}`}
+                    className="transition-opacity hover:opacity-70"
                   >
-                    <Icon size={16} />
+                    <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                   </a>
                 );
               })}

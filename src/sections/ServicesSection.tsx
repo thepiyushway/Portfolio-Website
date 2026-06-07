@@ -7,6 +7,7 @@ import {
   Cpu,
   Heart,
   Layers,
+  type LucideIcon,
   MessageCircle,
   Mic,
   Play,
@@ -15,6 +16,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { SOCIAL_LOGOS } from '../lib/socialLogos';
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
@@ -55,7 +57,6 @@ const COMMUNITY_POSTS = [
     url: 'https://www.instagram.com/p/DExTk-ph8Kw/?img_index=1',
     staticThumbnail: null,
     title: 'Visual AI experiments & creator stories',
-    layout: 'horizontal' as const,
     stats: [
       { icon: Heart, value: '158' },
       { icon: MessageCircle, value: '55K' },
@@ -79,8 +80,9 @@ const COMMUNITY_POSTS = [
 
 // ─── microlink hook ────────────────────────────────────────────────────────────
 
-function useMicrolinkImage(url: string | null) {
+function useMicrolinkData(url: string | null) {
   const [image, setImage] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
   const [loading, setLoading] = useState(url !== null);
 
   useEffect(() => {
@@ -95,6 +97,7 @@ function useMicrolinkImage(url: string | null) {
       .then((res) => {
         if (res.status === 'success') {
           setImage(res.data?.image?.url ?? null);
+          setDescription(res.data?.description ?? null);
         }
       })
       .catch(() => {})
@@ -103,7 +106,21 @@ function useMicrolinkImage(url: string | null) {
     return () => controller.abort();
   }, [url]);
 
-  return { image, loading };
+  return { image, description, loading };
+}
+
+// Instagram's own OG description always reads "<likes> likes, <comments> comments
+// - <username> on <date>: "<caption>"" — pull the three numbers/text out of it.
+function parseInstagramDescription(description: string | null) {
+  const match = description?.match(/^([\d,]+)\s+likes?,\s*([\d,]+)\s+comments?\s*-[^:]*:\s*([\s\S]*)$/);
+  if (!match) return { likes: null, comments: null, caption: null };
+
+  const [, likes, comments, rawCaption] = match;
+  return {
+    likes: Number(likes.replace(/,/g, '')),
+    comments: Number(comments.replace(/,/g, '')),
+    caption: rawCaption.trim().replace(/^[“”"]+|[“”".]+$/g, '') || null,
+  };
 }
 
 // ─── animation helpers ─────────────────────────────────────────────────────────
@@ -120,41 +137,11 @@ const cardVariant = {
 
 // ─── platform icons ────────────────────────────────────────────────────────────
 
-function YouTubeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-red-600" aria-hidden="true">
-      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z" />
-    </svg>
-  );
-}
-
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <defs>
-        <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#f09433" />
-          <stop offset="25%" stopColor="#e6683c" />
-          <stop offset="50%" stopColor="#dc2743" />
-          <stop offset="75%" stopColor="#cc2366" />
-          <stop offset="100%" stopColor="#bc1888" />
-        </linearGradient>
-      </defs>
-      <path
-        fill="url(#ig-grad)"
-        d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.013 7.053.072 5.775.131 4.602.425 3.635 1.392 2.668 2.359 2.374 3.532 2.315 4.81 2.256 6.09 2.243 6.498 2.243 12s.013 5.91.072 7.19c.059 1.278.353 2.451 1.32 3.418.967.967 2.14 1.261 3.418 1.32 1.28.059 1.688.072 7.19.072s5.91-.013 7.19-.072c1.278-.059 2.451-.353 3.418-1.32.967-.967 1.261-2.14 1.32-3.418C23.987 17.91 24 17.502 24 12s-.013-5.91-.072-7.19c-.059-1.278-.353-2.451-1.32-3.418C21.641.425 20.468.131 19.19.072 17.91.013 17.502 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
-      />
-    </svg>
-  );
-}
-
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-[#0A66C2]" aria-hidden="true">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  );
-}
+const PLATFORM_LOGOS: Record<Post['platform'], string> = {
+  YouTube: SOCIAL_LOGOS.youtube,
+  Instagram: SOCIAL_LOGOS.instagram,
+  LinkedIn: SOCIAL_LOGOS.linkedin,
+};
 
 // ─── service cards ─────────────────────────────────────────────────────────────
 
@@ -254,21 +241,21 @@ function FallbackGradient({ platform }: { platform: Post['platform'] }) {
 }
 
 function PlatformBadge({ post }: { post: Post }) {
-  const PlatformIcon =
-    post.platform === 'YouTube' ? YouTubeIcon : post.platform === 'Instagram' ? InstagramIcon : LinkedInIcon;
   return (
     <div
       className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${post.brandBg} ${post.brandText}`}
     >
-      <PlatformIcon />
+      <img src={PLATFORM_LOGOS[post.platform]} alt="" className="h-4 w-4 rounded-sm object-contain" />
       {post.platform}
     </div>
   );
 }
 
-function Stats({ stats }: { stats: Post['stats'] }) {
+type StatItem = { icon: LucideIcon; value: string };
+
+function Stats({ stats }: { stats: readonly StatItem[] }) {
   return (
-    <div className="flex items-center gap-4 border-t border-slate-100 pt-3">
+    <div className="flex items-center gap-4">
       {stats.map(({ icon: StatIcon, value }) => (
         <span key={value} className="flex items-center gap-1 text-xs text-slate-500">
           <StatIcon size={13} className="shrink-0" />
@@ -279,8 +266,21 @@ function Stats({ stats }: { stats: Post['stats'] }) {
   );
 }
 
-// Default layout: full-width thumbnail on top, text below
-function DefaultCard({ post, image, loading }: { post: Post; image: string | null; loading: boolean }) {
+// Single shared layout for every platform: compact thumbnail strip on top,
+// caption + engagement below — keeps all three cards the same height & weight.
+function ContentCard({
+  post,
+  image,
+  loading,
+  title,
+  stats,
+}: {
+  post: Post;
+  image: string | null;
+  loading: boolean;
+  title: string;
+  stats: readonly StatItem[];
+}) {
   const src = post.staticThumbnail ?? image;
   const isYouTube = post.platform === 'YouTube';
 
@@ -290,22 +290,22 @@ function DefaultCard({ post, image, loading }: { post: Post; image: string | nul
       href={post.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-soft transition-shadow duration-300 hover:shadow-elevated"
     >
-      <div className="relative h-44 overflow-hidden bg-slate-200">
+      <div className="relative h-28 shrink-0 overflow-hidden bg-slate-100 sm:h-32">
         {loading ? (
           <div className="h-full w-full animate-pulse bg-slate-200" />
         ) : src ? (
           <>
             <img
               src={src}
-              alt={post.title}
-              className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+              alt={title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             {isYouTube && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-red-600/90 shadow-lg backdrop-blur-sm transition-transform duration-200 group-hover:scale-110">
-                  <Play size={20} className="translate-x-0.5 fill-white text-white" />
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600/90 shadow-lg backdrop-blur-sm transition-transform duration-200 group-hover:scale-110">
+                  <Play size={16} className="translate-x-0.5 fill-white text-white" />
                 </span>
               </div>
             )}
@@ -315,68 +315,36 @@ function DefaultCard({ post, image, loading }: { post: Post; image: string | nul
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <div className="mb-3">
-          <PlatformBadge post={post} />
-        </div>
-        <p className="mb-4 flex-1 line-clamp-3 text-sm font-medium leading-6 text-slate-800">{post.title}</p>
-        <Stats stats={post.stats} />
-      </div>
-    </motion.a>
-  );
-}
-
-// Horizontal layout: platform badge top, then image-left / title-right, stats bottom
-function HorizontalCard({ post, image, loading }: { post: Post; image: string | null; loading: boolean }) {
-  const src = post.staticThumbnail ?? image;
-
-  return (
-    <motion.a
-      variants={cardVariant}
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-5 shadow-soft transition-shadow duration-300 hover:shadow-elevated"
-    >
-      <div className="mb-4">
+      <div className="flex flex-1 flex-col gap-2 px-4 py-3.5">
         <PlatformBadge post={post} />
-      </div>
-
-      <div className="mb-4 flex gap-4">
-        {/* square thumbnail */}
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-200">
-          {loading ? (
-            <div className="h-full w-full animate-pulse bg-slate-200" />
-          ) : src ? (
-            <img
-              src={src}
-              alt={post.title}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          ) : (
-            <FallbackGradient platform={post.platform} />
-          )}
+        <p className="line-clamp-2 text-sm font-medium leading-5 text-slate-800">{title}</p>
+        <div className="mt-auto">
+          <Stats stats={stats} />
         </div>
-
-        {/* title */}
-        <p className="flex-1 text-sm font-semibold leading-6 text-slate-800">{post.title}</p>
       </div>
-
-      <Stats stats={post.stats} />
     </motion.a>
   );
 }
 
 function CommunityCard({ post }: { post: Post }) {
   const needsFetch = post.staticThumbnail === null;
-  const { image, loading } = useMicrolinkImage(needsFetch ? post.url : null);
-  const isHorizontal = 'layout' in post && post.layout === 'horizontal';
+  const { image, description, loading } = useMicrolinkData(needsFetch ? post.url : null);
 
-  return isHorizontal ? (
-    <HorizontalCard post={post} image={image} loading={needsFetch && loading} />
-  ) : (
-    <DefaultCard post={post} image={image} loading={needsFetch && loading} />
-  );
+  if (post.platform !== 'Instagram') {
+    return <ContentCard post={post} image={image} loading={needsFetch && loading} title={post.title} stats={post.stats} />;
+  }
+
+  // Instagram: prefer the live caption/like/comment counts pulled from the
+  // post's own OG description, falling back to the static placeholders until
+  // (or unless) that fetch resolves.
+  const { likes, comments, caption } = parseInstagramDescription(description);
+  const title = caption ?? post.title;
+  const stats: StatItem[] = [
+    { icon: Heart, value: String(likes ?? post.stats[0].value) },
+    { icon: MessageCircle, value: String(comments ?? post.stats[1].value) },
+  ];
+
+  return <ContentCard post={post} image={image} loading={loading} title={title} stats={stats} />;
 }
 
 // ─── main export ───────────────────────────────────────────────────────────────
@@ -423,10 +391,10 @@ export function ServicesSection() {
             transition={{ duration: 0.45, ease }}
             className="mb-6 text-center"
           >
-            <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-brand-primary">
-              Content &amp; Community
+            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Latest Content</h2>
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+              Recent posts, videos, and insights from my platforms.
             </p>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Latest from the Community</h2>
           </motion.div>
 
           <motion.div
@@ -434,7 +402,7 @@ export function ServicesSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
             {COMMUNITY_POSTS.map((post) => (
               <CommunityCard key={post.platform} post={post} />
@@ -443,10 +411,10 @@ export function ServicesSection() {
 
           <motion.div
             initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.35, ease }}
-            className="mt-10 flex justify-center"
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.25, ease }}
+            className="mt-8 flex justify-center"
           >
             <Button
               href="https://topmate.io/thepiyushway"
@@ -455,7 +423,7 @@ export function ServicesSection() {
               variant="primary"
               size="lg"
             >
-              View All Content
+              Explore My Content
             </Button>
           </motion.div>
         </div>

@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { Instagram, Linkedin, Menu, X, Youtube } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '../data/siteContent';
 import { socials } from '../config/site';
+import { SOCIAL_LOGOS } from '../lib/socialLogos';
 
 const MAILTO_HREF = 'mailto:thepiyushway@gmail.com?subject=Let\'s%20Work%20Together&body=Hi%20Piyush%2C%0A%0AI\'d%20love%20to%20discuss%20a%20potential%20collaboration.%0A%0ABest%20regards';
 const RESUME_HREF = 'https://www.linkedin.com/in/thepiyushway/';
 
-const SOCIAL_ICON_MAP = {
-  youtube:   { Icon: Youtube,   color: 'text-red-500',   bg: 'hover:bg-red-50' },
-  linkedin:  { Icon: Linkedin,  color: 'text-blue-600',  bg: 'hover:bg-blue-50' },
-  instagram: { Icon: Instagram, color: 'text-pink-500',  bg: 'hover:bg-pink-50' },
-  twitter:   { Icon: X,         color: 'text-slate-700', bg: 'hover:bg-slate-100' },
+const SOCIAL_STYLE_MAP = {
+  youtube:   { color: 'text-red-500',   bg: 'hover:bg-red-50' },
+  linkedin:  { color: 'text-blue-600',  bg: 'hover:bg-blue-50' },
+  instagram: { color: 'text-pink-500',  bg: 'hover:bg-pink-50' },
+  twitter:   { color: 'text-slate-700', bg: 'hover:bg-slate-100' },
 } as const;
 
 const mobileVariants = {
@@ -55,7 +56,7 @@ export function Navbar() {
     if (value) setActive(value);
   };
 
-  const contentSocials = socials.filter((s) => s.id in SOCIAL_ICON_MAP);
+  const contentSocials = socials.filter((s) => s.id in SOCIAL_STYLE_MAP);
 
   return (
     <header
@@ -124,7 +125,8 @@ export function Navbar() {
                   className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-slate-100 bg-white p-2 shadow-lg"
                 >
                   {contentSocials.map(({ id, name, href }) => {
-                    const { Icon, color, bg } = SOCIAL_ICON_MAP[id as keyof typeof SOCIAL_ICON_MAP];
+                    const { color, bg } = SOCIAL_STYLE_MAP[id as keyof typeof SOCIAL_STYLE_MAP];
+                    const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
                     return (
                       <a
                         key={id}
@@ -134,7 +136,7 @@ export function Navbar() {
                         onClick={() => setContentOpen(false)}
                         className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${color} ${bg} transition`}
                       >
-                        <Icon size={16} />
+                        <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                         {name}
                       </a>
                     );
@@ -200,7 +202,8 @@ export function Navbar() {
                 </p>
                 <div className="grid grid-cols-2 gap-1.5">
                   {contentSocials.map(({ id, name, href }) => {
-                    const { Icon, color, bg } = SOCIAL_ICON_MAP[id as keyof typeof SOCIAL_ICON_MAP];
+                    const { color, bg } = SOCIAL_STYLE_MAP[id as keyof typeof SOCIAL_STYLE_MAP];
+                    const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
                     return (
                       <a
                         key={id}
@@ -210,7 +213,7 @@ export function Navbar() {
                         onClick={() => setMobileOpen(false)}
                         className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium ${color} ${bg} transition`}
                       >
-                        <Icon size={15} />
+                        <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                         {name}
                       </a>
                     );
