@@ -42,15 +42,14 @@ const MENTORSHIP_ITEMS = [
 const COMMUNITY_POSTS = [
   {
     platform: 'YouTube' as const,
-    url: 'https://www.youtube.com/watch?v=XIM_nbXESho',
+    // The channel has no uploads yet, so there's no real "latest video" to
+    // link to — point at the channel itself rather than a placeholder video.
+    url: 'https://www.youtube.com/@thepiyushway',
     // Shown until the live "latest upload" fetch resolves (or if the YouTube
     // Data API key is missing/the request fails) — see useLatestYoutubeVideo.
     staticThumbnail: '/images/youtube-fallback.jpg',
-    title: 'System Design & AI Breakdown',
-    stats: [
-      { icon: Play, value: '13K' },
-      { icon: MessageCircle, value: '17K' },
-    ],
+    title: 'New Videos Coming Soon : Subscribe to get Notified',
+    stats: [{ icon: Users, value: '805' }],
   },
   {
     platform: 'Instagram' as const,
