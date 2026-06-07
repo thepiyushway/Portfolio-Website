@@ -293,15 +293,17 @@ function ConsultingCard() {
       </span>
 
       <h3 className="mb-3 text-2xl font-bold text-white">AI Consulting &amp; Strategy</h3>
-      <p className="mb-6 text-sm leading-7 text-cyan-100/70">
+      <p className="mb-6 text-sm leading-7 text-cyan-100/95">
         Whether you want to ship a product powered by AI, embed intelligence into what you've already built,
         or just need a sharp technical mind in the room — I can help.
       </p>
 
       <ul className="mb-8 space-y-3">
         {AI_CONSULTING_ITEMS.map(({ icon: Icon, text }) => (
-          <li key={text} className="flex items-start gap-3 text-sm text-cyan-100/80">
-            <Icon size={16} className="mt-0.5 shrink-0 text-cyan-400" />
+          <li key={text} className="flex items-start gap-3 text-sm text-cyan-100/90">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+              <Icon size={14} className="shrink-0 text-white" />
+            </span>
             {text}
           </li>
         ))}
