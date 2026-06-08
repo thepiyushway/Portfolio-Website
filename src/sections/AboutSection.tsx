@@ -67,7 +67,7 @@ export function AboutSection() {
                 OPEN FOR MENTORSHIP
               </span>
               <span className="inline-flex items-center gap-1 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-primary">
-                🤖 AI STRATEGIST
+                AI STRATEGIST
               </span>
             </div>
 
