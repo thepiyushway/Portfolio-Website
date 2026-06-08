@@ -38,7 +38,7 @@ export function AboutSection() {
   return (
     <section id="about" className="scroll-mt-24 md:scroll-mt-28">
       <div className="section-wrapper !pb-16 !pt-24 md:!pt-28">
-        <div className="grid items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-12">
+        <div className="grid items-stretch gap-10 lg:grid-cols-[5fr_7fr] lg:gap-12">
 
           {/* Heading — shown first on mobile only, hidden on desktop (desktop version is inside Content below) */}
           <div className="lg:hidden">
@@ -59,16 +59,17 @@ export function AboutSection() {
 
           {/* Photo */}
           <motion.div
+            className="h-full"
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="overflow-hidden rounded-3xl border border-slate-200 shadow-elevated">
+            <div className="h-full overflow-hidden rounded-3xl border border-slate-200 shadow-elevated">
               <img
                 src="/images/about-photo.jpg"
                 alt="Piyush Sharma"
-                className="h-80 w-full object-cover object-bottom sm:h-96 lg:h-[640px]"
+                className="h-80 w-full object-cover object-bottom sm:h-96 lg:h-full"
                 loading="lazy"
               />
             </div>
@@ -76,6 +77,7 @@ export function AboutSection() {
 
           {/* Content */}
           <motion.div
+            className="flex flex-col justify-center"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
@@ -124,24 +126,26 @@ export function AboutSection() {
             </div>
 
             {/* Social links + CTA */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              {SOCIALS.map(({ id, href, label, logo, imgClass }) => (
-                <a
-                  key={id}
-                  href={href}
-                  onClick={(e) => openSocialWithMobileFallback(e, href)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="transition-transform duration-150 hover:scale-110"
-                >
-                  <img src={logo} alt="" className={imgClass} />
-                </a>
-              ))}
+            <div className="mt-8 space-y-4">
+              <div className="flex flex-wrap items-center gap-3">
+                {SOCIALS.map(({ id, href, label, logo, imgClass }) => (
+                  <a
+                    key={id}
+                    href={href}
+                    onClick={(e) => openSocialWithMobileFallback(e, href)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="transition-transform duration-150 hover:scale-110"
+                  >
+                    <img src={logo} alt="" className={imgClass} />
+                  </a>
+                ))}
+              </div>
 
               <a
                 href="#work"
-                className="ml-1 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-hover"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-hover"
               >
                 View My Work <ArrowRight size={15} />
               </a>
