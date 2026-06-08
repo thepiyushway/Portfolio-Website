@@ -71,25 +71,24 @@ export function AboutSection() {
           >
             <div className="mt-5 max-w-2xl space-y-4 text-base leading-8 text-text-secondary">
               <p>
-                I am Piyush Sharma, from [your city, country], and I studied at [your college/university]. That early
-                mix of curiosity and discipline shaped how I build today.
+                I&apos;m Piyush Sharma. I build products, design systems, and explore how AI can solve real-world
+                problems.
               </p>
               <p>
-                I started in software engineering, writing production systems, handling failures, and learning what it
-                really takes to ship reliable products. Over time, I worked across teams and projects linked to brands
-                like Microsoft, Amazon, American Express, and Kotak Mahindra Bank.
+                Since graduating from Punjab Engineering College, I&apos;ve worked across Microsoft, Amazon, and
+                American Express, contributing to everything from full-stack applications to AI-powered solutions.
               </p>
               <p>
-                Today, I work as a software engineer, AI consultant, and educator. I help teams design practical AI
-                systems, build strong full-stack products, and mentor engineers who want to grow faster with solid
-                fundamentals.
+                Today, I work with companies to turn AI into practical business value, and with engineers to turn
+                potential into careers - helping them learn, grow, and break into top tech roles.
               </p>
               <p>
-                What makes me different is simple: I care about outcomes, not noise. I focus on clear thinking, honest
-                execution, and solutions that hold up in the real world.
+                What makes me different is simple - I care about outcomes, not noise. I focus on clear thinking,
+                honest execution and solutions that hold up in the real world.
               </p>
               <p className="font-medium text-text-primary">
-                If you are building something meaningful and want a thoughtful technical partner, let&apos;s connect.
+                This website is a collection of the projects, experiments, and lessons that have shaped my journey so
+                far, hope you like it. Also, let&apos;s connect :)
               </p>
             </div>
           </motion.div>

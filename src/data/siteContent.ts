@@ -163,7 +163,6 @@ export type ExperienceEntry = {
   companyLogo: string;
   location: string;
   track: string;
-  status: string;
   role: string;
   summary: string;
   highlights: string[];
@@ -177,7 +176,6 @@ export const experienceTimeline: ExperienceEntry[] = [
     companyLogo: '/logos/microsoft-logo.png',
     location: 'Bengaluru, India',
     track: 'Microsoft Teams',
-    status: 'Working',
     role: 'Software Engineer II',
     summary: 'Joined Microsoft Teams as a Full Stack Developer, building user-facing and platform capabilities for collaboration workflows.',
     highlights: [
@@ -193,7 +191,6 @@ export const experienceTimeline: ExperienceEntry[] = [
     companyLogo: '/logos/kotak-mahindra-bank-logo.png',
     location: 'Bengaluru, India',
     track: 'Risk Engineering',
-    status: 'Completed',
     role: 'Software Development Engineer',
     summary: 'Worked on risk and reporting systems for enterprise banking workflows with measurable business impact.',
     highlights: [
@@ -209,7 +206,6 @@ export const experienceTimeline: ExperienceEntry[] = [
     companyLogo: '/logos/amazon-logo.png',
     location: 'Bengaluru, India',
     track: 'Customer Behaviour Analytics Team',
-    status: 'Completed',
     role: 'Software Development Engineer (SDE-1)',
     summary: 'Contributed to repeat engagement products and analytics pipelines under Customer Behavior Analysis.',
     highlights: [
@@ -225,7 +221,6 @@ export const experienceTimeline: ExperienceEntry[] = [
     companyLogo: '/logos/american-express-logo.png',
     location: 'Bengaluru, India',
     track: 'Global Commercial Services',
-    status: 'Completed',
     role: 'Engineer III',
     summary: 'Part of the Enterprise Cloud Platform team enabling faster time-to-market for business-critical applications.',
     highlights: [
@@ -241,7 +236,6 @@ export const experienceTimeline: ExperienceEntry[] = [
     companyLogo: '/logos/american-express-logo.png',
     location: 'Bengaluru, India',
     track: 'Global Commercial Services',
-    status: 'Completed',
     role: 'Technology Intern',
     summary: 'Contributed to GDR Data Modernization under the CODE team in Global Commercial Services.',
     highlights: [
