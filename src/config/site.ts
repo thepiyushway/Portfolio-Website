@@ -102,13 +102,13 @@ export const siteConfig = {
       {
         name: 'YouTube',
         href: 'https://www.youtube.com/@ThePiyushWay?sub_confirmation=1',
-        label: 'Follow on YouTube',
+        label: 'Subscribe on YouTube',
         logo: SOCIAL_LOGOS.youtube
       },
       {
         name: 'LinkedIn',
         href: 'https://www.linkedin.com/in/thepiyushway/',
-        label: 'Follow on LinkedIn',
+        label: 'Connect on LinkedIn',
         logo: SOCIAL_LOGOS.linkedin
       },
       {
