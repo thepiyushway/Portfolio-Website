@@ -8,25 +8,29 @@ const SOCIALS = [
     id: 'youtube',
     href: 'https://www.youtube.com/@ThePiyushWay?sub_confirmation=1',
     label: 'Subscribe on YouTube',
-    logo: SOCIAL_LOGOS.youtube
+    logo: SOCIAL_LOGOS.youtube,
+    imgClass: 'h-[40px] w-[55px] rounded-m object-contain'
   },
   {
     id: 'linkedin',
     href: 'https://www.linkedin.com/in/thepiyushway/',
     label: 'Connect on LinkedIn',
-    logo: SOCIAL_LOGOS.linkedin
+    logo: SOCIAL_LOGOS.linkedin,
+    imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
   },
   {
     id: 'instagram',
     href: 'https://www.instagram.com/thepiyushway/',
     label: 'Follow on Instagram',
-    logo: SOCIAL_LOGOS.instagram
+    logo: SOCIAL_LOGOS.instagram,
+    imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
   },
   {
     id: 'twitter',
     href: 'https://x.com/thepiyushway',
     label: 'Follow on X',
-    logo: SOCIAL_LOGOS.twitter
+    logo: SOCIAL_LOGOS.twitter,
+    imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
   }
 ] as const;
 
@@ -121,7 +125,7 @@ export function AboutSection() {
 
             {/* Social links + CTA */}
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              {SOCIALS.map(({ id, href, label, logo }) => (
+              {SOCIALS.map(({ id, href, label, logo, imgClass }) => (
                 <a
                   key={id}
                   href={href}
@@ -131,7 +135,7 @@ export function AboutSection() {
                   aria-label={label}
                   className="transition-transform duration-150 hover:scale-110"
                 >
-                  <img src={logo} alt="" className="h-11 w-11 rounded-xl object-contain" />
+                  <img src={logo} alt="" className={imgClass} />
                 </a>
               ))}
 

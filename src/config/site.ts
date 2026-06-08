@@ -69,6 +69,7 @@ type HeroSocialLink = {
   href: string;
   label: string;
   logo: string;
+  imgClass: string;
 };
 
 export const siteConfig = {
@@ -103,25 +104,29 @@ export const siteConfig = {
         name: 'YouTube',
         href: 'https://www.youtube.com/@ThePiyushWay?sub_confirmation=1',
         label: 'Subscribe on YouTube',
-        logo: SOCIAL_LOGOS.youtube
+        logo: SOCIAL_LOGOS.youtube,
+        imgClass: 'h-[40px] w-[55px] rounded-m object-contain'
       },
       {
         name: 'LinkedIn',
         href: 'https://www.linkedin.com/in/thepiyushway/',
         label: 'Connect on LinkedIn',
-        logo: SOCIAL_LOGOS.linkedin
+        logo: SOCIAL_LOGOS.linkedin,
+        imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
       },
       {
         name: 'Instagram',
         href: 'https://www.instagram.com/thepiyushway/',
         label: 'Follow on Instagram',
-        logo: SOCIAL_LOGOS.instagram
+        logo: SOCIAL_LOGOS.instagram,
+        imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
       },
       {
         name: 'X / Twitter',
         href: 'https://x.com/thepiyushway',
         label: 'Follow on X / Twitter',
-        logo: SOCIAL_LOGOS.twitter
+        logo: SOCIAL_LOGOS.twitter,
+        imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
       }
     ] as HeroSocialLink[],
     subscribe: {
