@@ -36,6 +36,23 @@ export function AboutSection() {
       <div className="section-wrapper !pb-16 !pt-24 md:!pt-28">
         <div className="grid items-center gap-10 lg:grid-cols-[5fr_7fr] lg:gap-12">
 
+          {/* Heading — shown first on mobile only, hidden on desktop (desktop version is inside Content below) */}
+          <div className="lg:hidden">
+            <div className="mb-5 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                OPEN FOR MENTORSHIP
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-primary">
+                AI STRATEGIST
+              </span>
+            </div>
+            <h2 className="text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
+              Hey! I'm{' '}
+              <span className="text-brand-primary">Piyush Sharma</span>
+            </h2>
+          </div>
+
           {/* Photo */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
@@ -47,7 +64,7 @@ export function AboutSection() {
               <img
                 src="/images/about-photo.jpg"
                 alt="Piyush Sharma"
-                className="h-80 w-full object-cover object-top sm:h-96 lg:h-[640px]"
+                className="h-80 w-full object-cover object-bottom sm:h-96 lg:h-[640px]"
                 loading="lazy"
               />
             </div>
@@ -60,22 +77,22 @@ export function AboutSection() {
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.55, delay: 0.12 }}
           >
-            {/* Availability badges */}
-            <div className="mb-5 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
-                OPEN FOR MENTORSHIP
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-primary">
-                AI STRATEGIST
-              </span>
+            {/* Availability badges + Heading — desktop only */}
+            <div className="hidden lg:block">
+              <div className="mb-5 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                  OPEN FOR MENTORSHIP
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-primary">
+                  AI STRATEGIST
+                </span>
+              </div>
+              <h2 className="mb-6 text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
+                Hey! I'm{' '}
+                <span className="text-brand-primary">Piyush Sharma</span>
+              </h2>
             </div>
-
-            {/* Heading */}
-            <h2 className="mb-6 text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
-              Hey! I'm{' '}
-              <span className="text-brand-primary">Piyush Sharma</span>
-            </h2>
 
             {/* Bio */}
             <div className="space-y-4 text-base leading-8 text-text-secondary">
