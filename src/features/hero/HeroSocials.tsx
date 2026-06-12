@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { fadeInUp } from '../../lib/motion';
-import { openSocialWithMobileFallback } from '../../lib/socialLink';
+import { fadeInUp } from '@/lib/motion';
+import { openSocialWithMobileFallback } from '@/lib/socials';
 import { socialHoverAnimation, socialTapAnimation } from './animations';
 
 type HeroSocialLink = {

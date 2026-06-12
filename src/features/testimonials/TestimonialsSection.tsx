@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import { testimonialFeed } from '../data/siteContent';
-import { Card } from '../components/Card';
-import { useTestimonials } from '../hooks/useTestimonials';
+import { testimonialFeed } from '@/content/testimonials';
+import { Card } from '@/components/ui/Card';
+import { useTestimonials } from './hooks/useTestimonials';
 
 function StarRating({ rating }: { rating: number }) {
   return (

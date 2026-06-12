@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Testimonial } from '../data/siteContent';
+import type { Testimonial } from '@/content/testimonials';
 
 const SHEET_ID = '1Cu2_cImY8TmQn8dx9HaJajnPZdtiE6lL1B_-YUZ_n_4';
 const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;

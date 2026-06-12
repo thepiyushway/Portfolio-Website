@@ -1,5 +1,5 @@
-import { socials } from '../config/site';
-import { SOCIAL_LOGOS } from '../lib/socialLogos';
+import { socials } from '@/content/site';
+import { SOCIAL_LOGOS } from '@/lib/socials';
 
 export function Footer() {
   const year = new Date().getFullYear();

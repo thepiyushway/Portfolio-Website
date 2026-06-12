@@ -1,4 +1,4 @@
-import { SOCIAL_LOGOS } from '../lib/socialLogos';
+import { SOCIAL_LOGOS } from '@/lib/socials';
 
 function getCompletedYears(startDate: Date): number {
   const today = new Date();

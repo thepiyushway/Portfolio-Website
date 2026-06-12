@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { SectionWrapper } from '../../components/ui/SectionWrapper';
-import { siteConfig } from '../../config/site';
-import { staggerContainer } from '../../lib/motion';
+import { SectionWrapper } from '@/components/ui/SectionWrapper';
+import { siteConfig } from '@/content/site';
+import { staggerContainer } from '@/lib/motion';
 import { heroImageReveal, heroViewport } from './animations';
 import { HeroCTA } from './HeroCTA';
 import { HeroContent } from './HeroContent';

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { navLinks } from '../data/siteContent';
-import { socials } from '../config/site';
-import { SOCIAL_LOGOS } from '../lib/socialLogos';
+import { navLinks } from '@/content/navigation';
+import { socials } from '@/content/site';
+import { SOCIAL_LOGOS } from '@/lib/socials';
 
 const MAILTO_HREF = 'mailto:thepiyushway@gmail.com?subject=Let\'s%20Work%20Together&body=Hi%20Piyush%2C%0A%0AI\'d%20love%20to%20discuss%20a%20potential%20collaboration.%0A%0ABest%20regards';
 const RESUME_HREF = 'https://www.linkedin.com/in/thepiyushway/';

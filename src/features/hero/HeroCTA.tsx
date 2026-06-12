@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
-import { fadeInUp } from '../../lib/motion';
+import { Button } from '@/components/ui/Button';
+import { fadeInUp } from '@/lib/motion';
 
 type HeroCTAProps = {
   primary: { label: string; href: string };

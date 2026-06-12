@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Navbar } from './components/Navbar';
-import { HeroSection } from './features/hero/HeroSection';
-import { TestimonialsSection } from './sections/TestimonialsSection';
-import { AboutSection } from './sections/AboutSection';
-import { ExperienceSection } from './sections/ExperienceSection';
-import { ProjectsSection } from './features/projects/ProjectsSection';
-import { ServicesSection } from './sections/ServicesSection';
-import { Footer } from './components/Footer';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { HeroSection } from '@/features/hero/HeroSection';
+import { TestimonialsSection } from '@/features/testimonials/TestimonialsSection';
+import { AboutSection } from '@/features/about/AboutSection';
+import { ExperienceSection } from '@/features/experience/ExperienceSection';
+import { ProjectsSection } from '@/features/projects/ProjectsSection';
+import { ServicesSection } from '@/features/services/ServicesSection';
 
 type ViewId = 'home' | 'about' | 'work';
 

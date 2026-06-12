@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { fadeInUp } from '../../lib/motion';
+import { fadeInUp } from '@/lib/motion';
 
 type HeroCompany = {
   name: string;

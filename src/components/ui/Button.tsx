@@ -1,5 +1,5 @@
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type ReactNode, type Ref } from 'react';
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/cn';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 type ButtonSize = 'md' | 'lg';

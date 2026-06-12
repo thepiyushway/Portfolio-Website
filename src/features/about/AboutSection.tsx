@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { openSocialWithMobileFallback } from '../lib/socialLink';
-import { SOCIAL_LOGOS } from '../lib/socialLogos';
+import { openSocialWithMobileFallback, SOCIAL_LOGOS } from '@/lib/socials';
 
 const SOCIALS = [
   {
@@ -113,10 +112,10 @@ export function AboutSection() {
               </p>
               <p>
                 Today, I work with companies to turn AI into practical business value, and with engineers to turn
-                potential into careers — helping them learn, grow, and break into top tech roles.
+                potential into careers - helping them learn, grow, and break into top tech roles.
               </p>
               <p>
-                What makes me different is simple — I care about outcomes, not noise. I focus on clear thinking,
+                What makes me different is simple - I care about outcomes, not noise. I focus on clear thinking,
                 honest execution and solutions that hold up in the real world.
               </p>
               <p>
