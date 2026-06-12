@@ -24,7 +24,7 @@ export function Footer() {
 
             <div className="flex gap-3.5">
               {socials.map(({ id, name, href }) => {
-                const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
+                const logo = SOCIAL_LOGOS[id];
                 if (!logo) return null;
                 return (
                   <a

@@ -1,11 +1,7 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/motion';
-
-type HeroStat = {
-  value: string;
-  label: string;
-};
+import type { HeroStat } from '@/content/site';
 
 type HeroStatsProps = {
   stats: HeroStat[];

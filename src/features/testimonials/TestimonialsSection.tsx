@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import { testimonialFeed } from '@/content/testimonials';
+import { testimonialFeed, type Testimonial } from '@/content/testimonials';
 import { Card } from '@/components/ui/Card';
 import { useTestimonials } from './hooks/useTestimonials';
 
@@ -37,7 +37,7 @@ const avatarColors = [
   'from-emerald-500 to-green-500',
 ];
 
-function TestimonialCard({ item, colorIndex }: { item: (typeof testimonialFeed)[number]; colorIndex: number }) {
+function TestimonialCard({ item, colorIndex }: { item: Testimonial; colorIndex: number }) {
   const gradient = avatarColors[colorIndex % avatarColors.length];
 
   return (
@@ -75,7 +75,7 @@ export function TestimonialsSection() {
           <div className="testimonial-track flex w-max gap-6 pr-6 pb-4">
             {doubledFeed.map((item, index) => (
               <motion.div
-                key={`${item.name}-${index}`}
+                key={`${item.id}-${index < feed.length ? 'a' : 'b'}`}
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.25 }}
                 className="w-80 shrink-0 sm:w-96 h-76"
@@ -88,7 +88,7 @@ export function TestimonialsSection() {
 
         <div className="mt-8 grid gap-6 md:hidden" aria-hidden="true">
           {feed.slice(0, 3).map((item, index) => (
-            <TestimonialCard key={`mobile-${item.name}`} item={item} colorIndex={index} />
+            <TestimonialCard key={item.id} item={item} colorIndex={index} />
           ))}
         </div>
 

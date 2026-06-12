@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { cn } from '@/lib/cn';
 
 type SectionWrapperProps = PropsWithChildren<{

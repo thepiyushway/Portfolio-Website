@@ -1,6 +1,14 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { openSocialWithMobileFallback, SOCIAL_LOGOS } from '@/lib/socials';
+import { openSocialWithMobileFallback, SOCIAL_LOGOS, type SocialId } from '@/lib/socials';
+
+type AboutSocial = {
+  id: SocialId;
+  href: string;
+  label: string;
+  logo: string;
+  imgClass: string;
+};
 
 const SOCIALS = [
   {
@@ -31,7 +39,7 @@ const SOCIALS = [
     logo: SOCIAL_LOGOS.twitter,
     imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
   }
-] as const;
+] as const satisfies readonly AboutSocial[];
 
 export function AboutSection() {
   return (

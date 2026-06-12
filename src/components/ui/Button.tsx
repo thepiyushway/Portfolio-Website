@@ -43,29 +43,21 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
   ({ children, className, variant = 'primary', size = 'md', ...props }, ref) => {
     const classes = cn(baseClass, variantClasses[variant], sizeClasses[size], className);
 
-    if ('href' in props && props.href) {
-      const { href, target, rel, ...anchorProps } = props;
+    // `href` discriminates the union (string vs undefined), so each branch gets
+    // fully-typed props. The ref casts remain because Ref<A | B> is not
+    // assignable to Ref<A> (refs are contravariant) — inherent to the
+    // polymorphic forwardRef pattern, and safe: each branch renders the
+    // element its ref type names.
+    if (props.href !== undefined) {
       return (
-        <a
-          ref={ref as Ref<HTMLAnchorElement>}
-          href={href}
-          target={target}
-          rel={rel}
-          className={classes}
-          {...anchorProps}
-        >
+        <a ref={ref as Ref<HTMLAnchorElement>} className={classes} {...props}>
           {children}
         </a>
       );
     }
 
     return (
-      <button
-        ref={ref as Ref<HTMLButtonElement>}
-        type={(props as ButtonAsButton).type ?? 'button'}
-        className={classes}
-        {...(props as ButtonAsButton)}
-      >
+      <button ref={ref as Ref<HTMLButtonElement>} type={props.type ?? 'button'} className={classes} {...props}>
         {children}
       </button>
     );

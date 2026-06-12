@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/content/navigation';
 import { socials } from '@/content/site';
-import { SOCIAL_LOGOS } from '@/lib/socials';
+import { SOCIAL_LOGOS, type SocialId } from '@/lib/socials';
 
 const MAILTO_HREF = 'mailto:thepiyushway@gmail.com?subject=Let\'s%20Work%20Together&body=Hi%20Piyush%2C%0A%0AI\'d%20love%20to%20discuss%20a%20potential%20collaboration.%0A%0ABest%20regards';
 const RESUME_HREF = 'https://www.linkedin.com/in/thepiyushway/';
@@ -13,7 +13,7 @@ const SOCIAL_STYLE_MAP = {
   linkedin:  { color: 'text-blue-600',  bg: 'hover:bg-blue-50' },
   instagram: { color: 'text-pink-500',  bg: 'hover:bg-pink-50' },
   twitter:   { color: 'text-slate-700', bg: 'hover:bg-slate-100' },
-} as const;
+} as const satisfies Record<SocialId, { color: string; bg: string }>;
 
 const mobileVariants = {
   open: { opacity: 1, y: 0, transition: { staggerChildren: 0.05 } },
@@ -42,7 +42,7 @@ export function Navbar() {
   useEffect(() => {
     if (!contentOpen) return;
     const handler = (e: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
+      if (contentRef.current && e.target instanceof Node && !contentRef.current.contains(e.target)) {
         setContentOpen(false);
       }
     };
@@ -125,8 +125,8 @@ export function Navbar() {
                   className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-slate-100 bg-white p-2 shadow-lg"
                 >
                   {contentSocials.map(({ id, name, href }) => {
-                    const { color, bg } = SOCIAL_STYLE_MAP[id as keyof typeof SOCIAL_STYLE_MAP];
-                    const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
+                    const { color, bg } = SOCIAL_STYLE_MAP[id];
+                    const logo = SOCIAL_LOGOS[id];
                     return (
                       <a
                         key={id}
@@ -202,8 +202,8 @@ export function Navbar() {
                 </p>
                 <div className="grid grid-cols-2 gap-1.5">
                   {contentSocials.map(({ id, name, href }) => {
-                    const { color, bg } = SOCIAL_STYLE_MAP[id as keyof typeof SOCIAL_STYLE_MAP];
-                    const logo = SOCIAL_LOGOS[id as keyof typeof SOCIAL_LOGOS];
+                    const { color, bg } = SOCIAL_STYLE_MAP[id];
+                    const logo = SOCIAL_LOGOS[id];
                     return (
                       <a
                         key={id}

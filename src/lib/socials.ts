@@ -7,6 +7,9 @@ export const SOCIAL_LOGOS = {
   twitter: '/logos/social/x.png',
 } as const;
 
+/** Canonical id for every social platform the site knows about — derived, not declared. */
+export type SocialId = keyof typeof SOCIAL_LOGOS;
+
 function isMobileDevice(): boolean {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }

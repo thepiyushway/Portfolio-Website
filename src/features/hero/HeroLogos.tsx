@@ -1,11 +1,7 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/motion';
-
-type HeroCompany = {
-  name: string;
-  logo: string;
-};
+import type { HeroCompany } from '@/content/site';
 
 type HeroLogosProps = {
   companies: HeroCompany[];
@@ -27,8 +23,8 @@ function HeroLogosBase({ companies }: HeroLogosProps) {
               onError={(e) => {
                 const logo = e.currentTarget;
                 logo.style.display = 'none';
-                const fallback = logo.nextElementSibling as HTMLElement | null;
-                if (fallback) fallback.style.display = 'inline-flex';
+                const fallback = logo.nextElementSibling;
+                if (fallback instanceof HTMLElement) fallback.style.display = 'inline-flex';
               }}
             />
             <span className="hidden text-sm font-medium text-slate-500">{company.name}</span>

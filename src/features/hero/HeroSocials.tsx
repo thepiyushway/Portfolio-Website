@@ -2,15 +2,8 @@ import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '@/lib/motion';
 import { openSocialWithMobileFallback } from '@/lib/socials';
+import type { HeroSocialLink } from '@/content/site';
 import { socialHoverAnimation, socialTapAnimation } from './animations';
-
-type HeroSocialLink = {
-  name: string;
-  href: string;
-  label: string;
-  logo: string;
-  imgClass: string;
-};
 
 type HeroSocialsProps = {
   prompt: string;

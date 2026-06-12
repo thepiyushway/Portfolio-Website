@@ -1,4 +1,43 @@
-import { SOCIAL_LOGOS } from '@/lib/socials';
+import { SOCIAL_LOGOS, type SocialId } from '@/lib/socials';
+
+// ── Hero & social types — single source of truth, imported by the hero feature ──
+
+export type HeroHeadingLine = {
+  text: string;
+  tone: 'default' | 'brand' | 'accent';
+};
+
+export type HeroStat = {
+  value: string;
+  label: string;
+};
+
+export type HeroCompany = {
+  name: string;
+  logo: string;
+};
+
+export type HeroSocialLink = {
+  name: string;
+  href: string;
+  label: string;
+  logo: string;
+  imgClass: string;
+};
+
+export type HeroCtaLink = {
+  label: string;
+  href: string;
+};
+
+export type SocialChannel = {
+  id: SocialId;
+  name: string;
+  href: string;
+  description: string;
+  cta: string;
+  icon: SocialId;
+};
 
 function getCompletedYears(startDate: Date): number {
   const today = new Date();
@@ -47,30 +86,7 @@ export const socials = [
     cta: 'Follow',
     icon: 'twitter'
   }
-] as const;
-
-type HeroHeadingLine = {
-  text: string;
-  tone: 'default' | 'brand' | 'accent';
-};
-
-type HeroStat = {
-  value: string;
-  label: string;
-};
-
-type HeroCompany = {
-  name: string;
-  logo: string;
-};
-
-type HeroSocialLink = {
-  name: string;
-  href: string;
-  label: string;
-  logo: string;
-  imgClass: string;
-};
+] as const satisfies readonly SocialChannel[];
 
 export const siteConfig = {
   hero: {
@@ -79,7 +95,7 @@ export const siteConfig = {
       { text: 'Software Engineer', tone: 'default' },
       { text: 'AI Consultant', tone: 'brand' },
       { text: 'Tech Educator', tone: 'accent' }
-    ] as HeroHeadingLine[],
+    ] satisfies HeroHeadingLine[],
     tagline:
       'Building scalable full-stack systems, deploying production-grade AI with real impact, and mentoring engineers to grow faster.',
     avatar: '/images/profile.jpg',
@@ -87,17 +103,17 @@ export const siteConfig = {
       { value: `${getCompletedYears(careerStartDate)}+`, label: 'Years of Experience' },
       { value: '600+', label: 'Students Mentored' },
       { value: '50+', label: 'Projects Shipped' }
-    ] as HeroStat[],
+    ] satisfies HeroStat[],
     workedWith: [
       { name: 'Microsoft', logo: '/logos/microsoft-logo.png' },
       { name: 'Amazon', logo: '/logos/amazon-logo.png' },
       { name: 'American Express', logo: '/logos/american-express-logo.png' },
       { name: 'Kotak Mahindra Bank', logo: '/logos/kotak-mahindra-bank-logo.png' }
-    ] as HeroCompany[],
+    ] satisfies HeroCompany[],
     cta: {
       primary: { label: 'Book a Strategy Call', href: 'https://calendly.com/thepiyushway/30min' },
       secondary: { label: 'Get Mentored', href: 'https://topmate.io/thepiyushway' }
-    },
+    } satisfies Record<'primary' | 'secondary', HeroCtaLink>,
     socialPrompt: 'Join 45k+ developers learning full-stack development and AI',
     socialLinks: [
       {
@@ -128,7 +144,7 @@ export const siteConfig = {
         logo: SOCIAL_LOGOS.twitter,
         imgClass: 'h-[40px] w-[40px] rounded-m object-contain'
       }
-    ] as HeroSocialLink[],
+    ] satisfies HeroSocialLink[],
     subscribe: {
       label: 'Subscribe for AI, full-stack & real world insights!',
       placeholder: 'Enter your e-mail',

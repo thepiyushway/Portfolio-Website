@@ -21,6 +21,12 @@ export function parseInstagramDescription(description: string | null) {
   if (!match) return { views: null, likes: null, comments: null, caption: null };
 
   const [, views, likes, comments, rawCaption] = match;
+  // The regex guarantees groups 2–4 whenever it matches; this guard satisfies
+  // noUncheckedIndexedAccess honestly instead of asserting with `!`.
+  if (likes === undefined || comments === undefined || rawCaption === undefined) {
+    return { views: null, likes: null, comments: null, caption: null };
+  }
+
   return {
     views: views ? Number(views.replace(/,/g, '')) : null,
     likes: Number(likes.replace(/,/g, '')),

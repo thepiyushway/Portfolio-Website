@@ -1,4 +1,6 @@
 export type ExperienceRole = {
+  /** Stable identity for React keys — never derive keys from role title. */
+  id: string;
   role: string;
   period: string;
   employmentType: string;
@@ -11,6 +13,8 @@ export type ExperienceRole = {
 };
 
 export type CompanyExperience = {
+  /** Stable identity for React keys and DOM ids (e.g. accordion panel ids). */
+  id: string;
   company: string;
   companyLogo: string;
   location: string;
@@ -20,12 +24,14 @@ export type CompanyExperience = {
 
 export const companyExperiences: CompanyExperience[] = [
   {
+    id: 'microsoft',
     company: 'Microsoft',
     companyLogo: '/logos/microsoft-icon.png',
     location: 'Bengaluru, India',
     period: 'Jan 2025 - Present',
     roles: [
       {
+        id: 'microsoft-software-engineer-2',
         role: 'Software Engineer II',
         period: 'Jan 2025 - Present',
         employmentType: 'Full-time',
@@ -41,12 +47,14 @@ export const companyExperiences: CompanyExperience[] = [
     ]
   },
   {
+    id: 'kotak-mahindra-bank',
     company: 'Kotak Mahindra Bank',
     companyLogo: '/logos/kotak-icon.png',
     location: 'Bengaluru, India',
     period: 'Jun 2023 - Jan 2025',
     roles: [
       {
+        id: 'kotak-software-development-engineer',
         role: 'Software Development Engineer',
         period: 'Jun 2023 - Jan 2025',
         employmentType: 'Full-time',
@@ -63,12 +71,14 @@ export const companyExperiences: CompanyExperience[] = [
     ]
   },
   {
+    id: 'amazon',
     company: 'Amazon',
     companyLogo: '/logos/amazon-icon.png',
     location: 'Bengaluru, India',
     period: 'Jun 2022 - Mar 2023',
     roles: [
       {
+        id: 'amazon-sde-1',
         role: 'Software Development Engineer (SDE-1)',
         period: 'Jun 2022 - Mar 2023',
         employmentType: 'Full-time',
@@ -85,12 +95,14 @@ export const companyExperiences: CompanyExperience[] = [
     ]
   },
   {
+    id: 'american-express',
     company: 'American Express',
     companyLogo: '/logos/amex-icon.png',
     location: 'Bengaluru, India',
     period: 'Jan 2020 - Jun 2022',
     roles: [
       {
+        id: 'amex-engineer-3',
         role: 'Engineer III',
         period: 'Jul 2021 - Jun 2022',
         employmentType: 'Full-time',
@@ -105,6 +117,7 @@ export const companyExperiences: CompanyExperience[] = [
         tools: ['Python', 'AI', 'Cloud Engineering', 'Platform Operations', 'RASA']
       },
       {
+        id: 'amex-technology-intern',
         role: 'Technology Intern',
         period: 'Jan 2020 - Jun 2020',
         employmentType: 'Internship',

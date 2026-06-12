@@ -20,7 +20,7 @@ export const MENTORSHIP_ITEMS = [
 
 export const COMMUNITY_POSTS = [
   {
-    platform: 'YouTube' as const,
+    platform: 'YouTube',
     // The channel has no uploads yet, so there's no real "latest video" to
     // link to — point at the channel itself rather than a placeholder video.
     url: 'https://www.youtube.com/@thepiyushway',
@@ -31,7 +31,7 @@ export const COMMUNITY_POSTS = [
     stats: [{ icon: Users, value: '805' }],
   },
   {
-    platform: 'LinkedIn' as const,
+    platform: 'LinkedIn',
     url: 'https://www.linkedin.com/feed/update/urn:li:activity:7032364448006754304/',
     staticThumbnail: '/images/linkedin-profile.png',
     title: "Piyush's latest article on engineering leadership — practical, national engineering leadership and beyond.",
@@ -41,7 +41,7 @@ export const COMMUNITY_POSTS = [
     ],
   },
   {
-    platform: 'Instagram' as const,
+    platform: 'Instagram',
     url: 'https://www.instagram.com/p/DExTk-ph8Kw/?img_index=1',
     staticThumbnail: null,
     title: 'Visual AI experiments & creator stories',

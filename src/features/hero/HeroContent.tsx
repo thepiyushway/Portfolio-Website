@@ -1,11 +1,7 @@
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/Badge';
 import { fadeInUp } from '@/lib/motion';
-
-type HeroHeadingLine = {
-  text: string;
-  tone: 'default' | 'brand' | 'accent';
-};
+import type { HeroHeadingLine } from '@/content/site';
 
 type HeroContentProps = {
   availabilityLabel: string;

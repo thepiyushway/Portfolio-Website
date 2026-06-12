@@ -1,4 +1,6 @@
 export type Project = {
+  /** Stable identity for React keys — never derive keys from title. */
+  id: string;
   title: string;
   description: string;
   tags: string[];
@@ -10,6 +12,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'enterprise-knowledge-engine',
     title: 'Enterprise Knowledge Engine',
     description: 'Reduced customer support response time by 50% by implementing a RAG-based AI assistant.',
     tags: ['Python', 'VectorDB', 'AWS'],
@@ -19,6 +22,7 @@ export const projects: Project[] = [
     github: 'https://github.com'
   },
   {
+    id: 'high-throughput-api-gateway',
     title: 'High-Throughput API Gateway',
     description: 'Architected a microservices gateway handling 100k+ RPS with 99.99% uptime for global fintech.',
     tags: ['TypeScript', 'Kubernetes', 'Edge'],
@@ -28,6 +32,7 @@ export const projects: Project[] = [
     github: 'https://github.com'
   },
   {
+    id: 'real-time-data-analytics-platform',
     title: 'Real-Time Data Analytics Platform',
     description: 'Developed a platform for real-time data ingestion and visualization using Apache Kafka and Tableau.',
     tags: ['Kafka', 'Spark', 'Tableau'],

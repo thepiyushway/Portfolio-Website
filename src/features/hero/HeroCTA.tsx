@@ -2,10 +2,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { fadeInUp } from '@/lib/motion';
+import type { HeroCtaLink } from '@/content/site';
 
 type HeroCTAProps = {
-  primary: { label: string; href: string };
-  secondary: { label: string; href: string };
+  primary: HeroCtaLink;
+  secondary: HeroCtaLink;
 };
 
 function getLinkTargetProps(href: string) {

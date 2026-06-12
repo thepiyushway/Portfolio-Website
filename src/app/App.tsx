@@ -7,17 +7,11 @@ import { AboutSection } from '@/features/about/AboutSection';
 import { ExperienceSection } from '@/features/experience/ExperienceSection';
 import { ProjectsSection } from '@/features/projects/ProjectsSection';
 import { ServicesSection } from '@/features/services/ServicesSection';
-
-type ViewId = 'home' | 'about' | 'work';
+import { navLinks, type ViewId } from '@/content/navigation';
 
 function getViewFromHash(hash: string): ViewId {
   const value = hash.replace('#', '');
-
-  if (value === 'about' || value === 'work') {
-    return value;
-  }
-
-  return 'home';
+  return navLinks.find((link) => link.id === value)?.id ?? 'home';
 }
 
 function App() {

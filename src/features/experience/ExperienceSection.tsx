@@ -41,9 +41,9 @@ function RoleDetail({ role }: { role: ExperienceRole }) {
   );
 }
 
-function CompanyCard({ item, index }: { item: CompanyExperience; index: number }) {
+function CompanyCard({ item }: { item: CompanyExperience }) {
   const [isOpen, setIsOpen] = useState(false);
-  const panelId = `company-panel-${index}`;
+  const panelId = `company-panel-${item.id}`;
 
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-soft transition-shadow hover:shadow-elevated">
@@ -75,7 +75,7 @@ function CompanyCard({ item, index }: { item: CompanyExperience; index: number }
           {/* Metadata block: role · duration · location */}
           <div className="mt-1.5 space-y-1">
             {item.roles.map((role) => (
-              <div key={role.role} className="space-y-0.5">
+              <div key={role.id} className="space-y-0.5">
                 <p className="text-[15px] font-semibold leading-snug text-text-primary">{role.role}</p>
                 <p className="text-[13px] font-medium leading-snug text-text-muted">{role.period}</p>
               </div>
@@ -100,7 +100,7 @@ function CompanyCard({ item, index }: { item: CompanyExperience; index: number }
           >
             <div className="space-y-6 border-t border-slate-100 px-4 pb-5 pt-4 sm:px-5">
               {item.roles.map((role, i) => (
-                <div key={role.role} className={i > 0 ? 'border-t border-slate-100 pt-6' : ''}>
+                <div key={role.id} className={i > 0 ? 'border-t border-slate-100 pt-6' : ''}>
                   <RoleDetail role={role} />
                 </div>
               ))}
@@ -119,12 +119,12 @@ function SkillsPanel() {
 
       <div className="mt-6 space-y-6">
         {skillCategories.map((category) => (
-          <div key={category.category}>
+          <div key={category.id}>
             <p className="text-sm font-bold text-text-primary">{category.category}</p>
             <div className="mt-2.5 flex flex-wrap gap-2">
               {category.skills.map((skill) => (
                 <span
-                  key={skill.name}
+                  key={skill.id}
                   className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-text-secondary"
                 >
                   {skill.name}
@@ -176,7 +176,7 @@ export function ExperienceSection() {
               <div className="space-y-4">
                 {companyExperiences.map((item, index) => (
                   <motion.div
-                    key={item.company}
+                    key={item.id}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.15 }}
@@ -187,7 +187,7 @@ export function ExperienceSection() {
                       className="absolute -left-9 top-9 hidden h-4 w-4 rounded-full border-4 border-surface-base bg-brand-primary shadow-[0_0_0_8px_rgba(0,99,194,0.14)] lg:block"
                       aria-hidden="true"
                     />
-                    <CompanyCard item={item} index={index} />
+                    <CompanyCard item={item} />
                   </motion.div>
                 ))}
               </div>

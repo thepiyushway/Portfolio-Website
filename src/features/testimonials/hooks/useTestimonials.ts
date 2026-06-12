@@ -22,7 +22,7 @@ function parseSheet(text: string): Testimonial[] {
 
   if (nameIdx === -1) return [];
 
-  return rows.flatMap((row): Testimonial[] => {
+  return rows.flatMap((row, rowIndex): Testimonial[] => {
     const rawName = row.c[nameIdx]?.v;
     if (!rawName) return [];
 
@@ -30,6 +30,9 @@ function parseSheet(text: string): Testimonial[] {
     const rawRating = ratingIdx !== -1 ? row.c[ratingIdx]?.v : 5;
 
     return [{
+      // Sheet rows carry no identity of their own; the row position is the
+      // most stable identifier available for a feed that only ever appends.
+      id: `sheet-${rowIndex}`,
       name: String(rawName).trim(),
       quote: rawQuote ? String(rawQuote).trim() : '',
       rating: Math.min(5, Math.max(1, Number(rawRating) || 5)),

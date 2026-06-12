@@ -21,7 +21,7 @@ export function ProjectsSection() {
         <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (
             <motion.article
-              key={project.title}
+              key={project.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
