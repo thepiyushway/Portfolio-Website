@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, MapPin } from 'lucide-react';
 import { companyExperiences, type CompanyExperience, type ExperienceRole } from '@/content/experience';
-import { skillCategories } from '@/content/skills';
+import { skillCategories, skillsIntro } from '@/content/skills';
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
@@ -114,23 +114,18 @@ function CompanyCard({ item }: { item: CompanyExperience }) {
 
 function SkillsPanel() {
   return (
-    <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-soft">
-      <h3 className="border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Expertise</h3>
+    <div>
+      <h3 className="border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Skills</h3>
 
-      <div className="mt-6 space-y-6">
+      <p className="mt-4 text-sm leading-7 text-text-secondary">{skillsIntro}</p>
+
+      <div className="mt-6 space-y-4">
         {skillCategories.map((category) => (
           <div key={category.id}>
-            <p className="text-sm font-bold text-text-primary">{category.category}</p>
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {category.skills.map((skill) => (
-                <span
-                  key={skill.id}
-                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-text-secondary"
-                >
-                  {skill.name}
-                </span>
-              ))}
-            </div>
+            <SectionLabel>{category.category}</SectionLabel>
+            <p className="mt-1 text-sm font-medium leading-6 text-text-secondary">
+              {category.skills.join(' · ')}
+            </p>
           </div>
         ))}
       </div>
