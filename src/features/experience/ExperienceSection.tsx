@@ -53,7 +53,7 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
               </span>
             ))}
             {isCurrent && (
-              <Badge variant="success" className="px-2.5 py-0.5 text-[11px]">
+              <Badge variant="success" className="px-0.5 text-[12px]">
                 Current
               </Badge>
             )}
