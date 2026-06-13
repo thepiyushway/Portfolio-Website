@@ -1,7 +1,8 @@
 import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, MapPin } from 'lucide-react';
-import { companyExperiences, type CompanyExperience, type ExperienceRole } from '@/content/experience';
+import { Badge } from '@/components/ui/Badge';
+import { companyExperiences, type CompanyExperience } from '@/content/experience';
 import { skillCategories, skillsIntro } from '@/content/skills';
 
 function SectionLabel({ children }: { children: ReactNode }) {
@@ -10,82 +11,72 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
-function RoleDetail({ role }: { role: ExperienceRole }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <p className="mt-1 text-sm text-text-primary">{role.track}</p>
-      </div>
-
-      {/* Impact */}
-      <div>
-        <SectionLabel>Highlights</SectionLabel>
-        <ul className="mt-2 space-y-2 text-sm leading-7 text-text-secondary">
-          {role.highlights.map((highlight) => (
-            <li key={highlight} className="flex gap-3">
-              <span className="mt-[11px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
-              <span>{highlight}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Tech Stack */}
-      <div>
-        <SectionLabel>Tech Stack</SectionLabel>
-        <p className="mt-1.5 text-sm font-medium leading-7 text-text-secondary">
-          {role.tools.join(' · ')}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function CompanyCard({ item }: { item: CompanyExperience }) {
+function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = `company-panel-${item.id}`;
+  const primaryRole = item.roles[0];
+  const allHighlights = item.roles.flatMap((role) => role.highlights);
+  const allTools = Array.from(new Set(item.roles.flatMap((role) => role.tools)));
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-soft transition-shadow hover:shadow-elevated">
+    <div
+      className={`overflow-hidden rounded-l border shadow-soft transition-shadow hover:shadow-elevated ${
+        isCurrent ? 'border-brand-primary/30 bg-brand-50/30' : 'border-slate-200 bg-white'
+      }`}
+    >
+      <div className="flex items-start gap-4 p-5">
+        <img
+          src={item.companyLogo}
+          alt={item.company}
+          className="h-14 w-14 flex-shrink-0 border border-slate-100 bg-white object-contain"
+          loading="lazy"
+        />
+
+        <div className="min-w-0 flex-1">
+          {/* Company name + location — primary row */}
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <p className="text-xl font-bold leading-tight text-text-primary sm:text-2xl">{item.company}</p>
+            <p className="inline-flex items-center gap-1 text-[14px] font-medium leading-snug text-text-muted">
+              <MapPin size={14} className="flex-shrink-0 text-brand-primary" />
+              {item.location}
+            </p>
+          </div>
+
+          {/* Roles + current badge */}
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+            {item.roles.map((role) => (
+              <span key={role.id} className="text-[15px] font-semibold leading-snug text-brand-primary">
+                {role.role}
+                {item.roles.length > 1 && (
+                  <span className="ml-1.5 text-[12px] font-medium text-text-muted">{role.period}</span>
+                )}
+              </span>
+            ))}
+            {isCurrent && (
+              <Badge variant="success" className="px-2.5 py-0.5 text-[11px]">
+                Current
+              </Badge>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className="mt-2 text-sm leading-6 text-text-secondary">{primaryRole.summary}</p>
+        </div>
+      </div>
+
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className="flex w-full items-start gap-3.5 p-4 text-left sm:gap-4 sm:p-5"
+        className="flex w-full items-center justify-center gap-1.5 border-t border-slate-100 py-2.5 text-xs font-semibold text-brand-primary transition hover:bg-surface-subtle"
       >
-        <img
-          src={item.companyLogo}
-          alt={item.company}
-          className="h-[42px] w-[42px] flex-shrink-0 object-contain"
-          loading="lazy"
+        {isOpen ? 'Show less' : 'Show more'}
+        <ChevronDown
+          size={16}
+          aria-hidden="true"
+          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
         />
-
-        <div className="min-w-0 flex-1">
-          {/* Company name + chevron — primary row */}
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-xl font-bold leading-tight text-text-primary sm:text-2xl">{item.company}</p>
-            <ChevronDown
-              size={20}
-              aria-hidden="true"
-              className={`flex-shrink-0 text-brand-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-            />
-          </div>
-
-          {/* Metadata block: role · duration · location */}
-          <div className="mt-1.5 space-y-1">
-            {item.roles.map((role) => (
-              <div key={role.id} className="space-y-0.5">
-                <p className="text-[15px] font-semibold leading-snug text-text-primary">{role.role}</p>
-                <p className="text-[13px] font-medium leading-snug text-text-muted">{role.period}</p>
-              </div>
-            ))}
-            <p className="inline-flex items-center gap-1 text-[13px] font-medium leading-snug text-text-muted">
-              <MapPin size={13} className="flex-shrink-0 text-brand-primary" />
-              {item.location}
-            </p>
-          </div>
-        </div>
       </button>
 
       <AnimatePresence initial={false}>
@@ -98,12 +89,25 @@ function CompanyCard({ item }: { item: CompanyExperience }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="space-y-6 border-t border-slate-100 px-4 pb-5 pt-4 sm:px-5">
-              {item.roles.map((role, i) => (
-                <div key={role.id} className={i > 0 ? 'border-t border-slate-100 pt-6' : ''}>
-                  <RoleDetail role={role} />
-                </div>
-              ))}
+            <div className="space-y-5 border-t border-slate-100 px-5 pb-5 pt-4">
+              {/* Highlights */}
+              <div>
+                <SectionLabel>Highlights</SectionLabel>
+                <ul className="mt-2 space-y-2 text-sm leading-7 text-text-secondary">
+                  {allHighlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3">
+                      <span className="mt-[11px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Tech Stack */}
+              <div>
+                <SectionLabel>Tech Stack</SectionLabel>
+                <p className="mt-1.5 text-sm font-medium leading-7 text-text-secondary">{allTools.join(' · ')}</p>
+              </div>
             </div>
           </motion.div>
         )}
@@ -162,30 +166,53 @@ export function ExperienceSection() {
               <h2 className="text-3xl font-bold leading-tight text-text-primary sm:text-4xl">Professional Journey</h2>
             </motion.div>
 
-            <div className="relative mt-8 lg:pl-9">
-              <div
-                className="absolute bottom-6 left-[7px] top-6 hidden w-px bg-gradient-to-b from-brand-100/20 via-brand-primary/60 to-brand-100/20 lg:block"
-                aria-hidden="true"
-              />
+            <div className="mt-8 space-y-5">
+              {companyExperiences.map((item, index) => {
+                const [start, end] = item.period.split(' - ');
+                const isCurrent = end === 'Present';
+                const topLabel = isCurrent ? 'Present' : start;
+                const bottomLabel = isCurrent ? start : end;
+                const isLast = index === companyExperiences.length - 1;
 
-              <div className="space-y-4">
-                {companyExperiences.map((item, index) => (
+                return (
                   <motion.div
                     key={item.id}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.15 }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="relative"
+                    className="relative flex gap-4 lg:gap-6"
                   >
-                    <span
-                      className="absolute -left-9 top-9 hidden h-4 w-4 rounded-full border-4 border-surface-base bg-brand-primary shadow-[0_0_0_8px_rgba(0,99,194,0.14)] lg:block"
-                      aria-hidden="true"
-                    />
-                    <CompanyCard item={item} />
+                    {/* Timeline column */}
+                    <div className="relative hidden flex-shrink-0 lg:block lg:w-16">
+                      <div className="pt-6 text-right">
+                        <p
+                          className={`text-[11px] font-bold uppercase tracking-wide ${
+                            isCurrent ? 'text-emerald-600' : 'text-text-muted'
+                          }`}
+                        >
+                          {topLabel}
+                        </p>
+                        <p className="mt-0.5 text-[11px] font-medium text-text-muted">{bottomLabel}</p>
+                      </div>
+                      <span
+                        className="absolute right-[-18px] top-7 h-3 w-3 rounded-full border-[3px] border-surface-base bg-brand-primary shadow-[0_0_0_4px_rgba(0,99,194,0.14)]"
+                        aria-hidden="true"
+                      />
+                      {!isLast && (
+                        <span
+                          className="absolute bottom-[-20px] right-[-13px] top-10 w-px bg-gradient-to-b from-brand-primary/40 to-brand-100/20"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <CompanyCard item={item} isCurrent={isCurrent} />
+                    </div>
                   </motion.div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </div>
