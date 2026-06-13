@@ -69,9 +69,8 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className="flex w-full items-center justify-center gap-1.5 border-t border-slate-100 py-2.5 text-xs font-semibold text-brand-primary transition hover:bg-surface-subtle"
+        className="flex w-full items-center justify-center gap-1.5 border-t border-slate-100 text-xs font-semibold text-brand-primary transition hover:bg-surface-subtle"
       >
-        {isOpen ? 'Show less' : 'Show more'}
         <ChevronDown
           size={16}
           aria-hidden="true"

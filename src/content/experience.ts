@@ -61,9 +61,9 @@ export const companyExperiences: CompanyExperience[] = [
         track: 'Risk Engineering',
         summary: 'Worked on risk and reporting systems for enterprise banking workflows with measurable business impact.',
         highlights: [
-          'Developed the Credit Risk platform, reducing risk report creation time by 95% and helping save approximately INR 500,000 monthly.',
-          'Designed and launched a call reporting dashboard for relationship managers and clients.',
-          'Optimized client collateral mapping, improving Capital Adequacy Ratio by 1%.'
+          'Built a Credit Risk Platform that reduced risk report generation time by 95%, resulting in ₹5 lakh monthly operational savings.',
+          'Designed and launched a Call Reporting Dashboard for relationship managers and clients, improving visibility into client interactions and engagement.',
+          '    Optimized client collateral mapping workflows, contributing to a 1% improvement in Capital Adequacy Ratio (CAR).'
         ],
         metrics: ['95% Faster', '₹5L/mo Saved', '+1% CAR'],
         tools: ['Python', 'FastAPI', 'Docker', 'Microservices', 'AWS']
