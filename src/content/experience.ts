@@ -1,19 +1,16 @@
 export type ExperienceRole = {
-  /** Stable identity for React keys — never derive keys from role title. */
   id: string;
   role: string;
   period: string;
   employmentType: string;
   track: string;
   summary: string;
+  keyImpact: string;
   highlights: string[];
   tools: string[];
-  /** Short, scannable headline metrics derived from highlights. Shown as badges in the expanded card. */
-  metrics?: string[];
 };
 
 export type CompanyExperience = {
-  /** Stable identity for React keys and DOM ids (e.g. accordion panel ids). */
   id: string;
   company: string;
   companyLogo: string;
@@ -37,6 +34,7 @@ export const companyExperiences: CompanyExperience[] = [
         employmentType: 'Full-time',
         track: 'Microsoft Teams',
         summary: 'Joined Microsoft Teams as a Full Stack Developer, building user-facing and platform capabilities for collaboration workflows.',
+        keyImpact: 'Enhanced collaboration experience for millions of Teams users through scalable feature delivery.',
         highlights: [
           'Building product features across frontend and backend systems for Microsoft Teams.',
           'Collaborating with cross-functional stakeholders to improve user experience and delivery velocity.',
@@ -60,13 +58,13 @@ export const companyExperiences: CompanyExperience[] = [
         employmentType: 'Full-time',
         track: 'Risk Engineering',
         summary: 'Worked on risk and reporting systems for enterprise banking workflows with measurable business impact.',
+        keyImpact: 'Reduced risk reporting time by 95%, delivered ₹5 lakh/month in operational savings, and improved capital efficiency through credit risk platform modernization.',
         highlights: [
           'Built a Credit Risk Platform that reduced risk report generation time by 95%, resulting in ₹5 lakh monthly operational savings.',
           'Designed and launched a Call Reporting Dashboard for relationship managers and clients, improving visibility into client interactions and engagement.',
-          '    Optimized client collateral mapping workflows, contributing to a 1% improvement in Capital Adequacy Ratio (CAR).'
+          'Optimized client collateral mapping workflows, contributing to a 1% improvement in Capital Adequacy Ratio (CAR).'
         ],
-        metrics: ['95% Faster', '₹5L/mo Saved', '+1% CAR'],
-        tools: ['Python', 'FastAPI', 'Docker', 'Microservices', 'AWS']
+        tools: ['Python', 'FastAPI', 'REST APIs', 'Microservices', 'GitHub Actions', 'AWS']
       }
     ]
   },
@@ -84,13 +82,13 @@ export const companyExperiences: CompanyExperience[] = [
         employmentType: 'Full-time',
         track: 'Customer Behaviour Analytics Team',
         summary: 'Worked in the Repeat Engagement Team under Customer Behaviour Analysis org, owning Amazon’s insights pipeline, from data collection to deep analytics. Ultimately, we answer why customer behavior changes, and how to influence it.',
+        keyImpact: 'Drove $178M in annualized impact by expanding review solicitation models globally while cutting weekly ticket volume by 33%.',
         highlights: [
           'Expanded CTRC review solicitation model to CA, UK, and IN marketplaces, generating annualized transactional CP impact of $178M.',
-          'Modernized GREP targeting system by improving alarming, scheduling, and Spark memory efficiency.',
-          'Served as operational SPOC, reducing weekly tickets from about 120 to 80 and resolved 194 tickets during on-call rotation.'
+          'Improved GREP Targeting System through Spark optimization, monitoring, and scheduling enhancements.',
+          'Reduced operational ticket volume by 33% as team Operational SPOC.'
         ],
-        metrics: ['$178M Impact', '33% Fewer Tickets', '194 Resolved'],
-        tools: ['Python', 'REST APIs', 'Apache Spark', 'Data Pipelines', 'Operations']
+        tools: ['Artificial Intelligence', 'Python', 'REST APIs', 'AWS', 'Apache Spark', 'Data Pipelines', 'Distributed Systems']
       }
     ]
   },
@@ -107,14 +105,14 @@ export const companyExperiences: CompanyExperience[] = [
         period: 'Jul 2021 - Jun 2022',
         employmentType: 'Full-time',
         track: 'Global Commercial Services',
-        summary: 'Part of the Enterprise Cloud Platform team enabling faster time-to-market for business-critical applications.',
+        summary: 'Worked across American Express’ Enterprise Cloud Platform (eCP) and CODE organizations, building cloud infrastructure, automation platforms, and large-scale data systems.',
+        keyImpact: 'Enabled regulatory compliance and enterprise modernization by onboarding 200+ services and transforming 15+ legacy ETL workflows onto modern cloud and big-data platforms.',
         highlights: [
-          'Onboarded 200+ services to the India cluster for data localization compliance initiatives.',
-          'Collaborated with platform teams to rotate and update SSL certificates across internal intranet services.',
-          'Built an AI-powered Slack bot using RASA NLU to assist with recurring cloud engineering support queries.'
+          'Onboarded 200+ services as part of the RBI Data Localization initiative.',
+          'Built an AI-powered Slack assistant to automate cloud engineering support.',
+          'Led enterprise-wide SSL certificate migration across internal services.'
         ],
-        metrics: ['200+ Services', 'AI Slack Bot'],
-        tools: ['Python', 'AI', 'Cloud Engineering', 'Platform Operations', 'RASA']
+        tools: ['Python', 'Artificial Intelligence', 'RASA NLU', 'AWS']
       },
       {
         id: 'amex-technology-intern',
@@ -122,14 +120,13 @@ export const companyExperiences: CompanyExperience[] = [
         period: 'Jan 2020 - Jun 2020',
         employmentType: 'Internship',
         track: 'Global Commercial Services',
-        summary: 'Contributed to GDR Data Modernization under the CODE team in Global Commercial Services.',
+        summary: '',
+        keyImpact: '',
         highlights: [
-          'Replicated ETL pipelines previously built in Ab Initio using Spark, Hadoop, and Oozie.',
-          'Transformed around 15 Ab Initio graphs into Spark jobs in Scala.',
-          'Converted stored procedures from DB2 to Oracle and received a pre-placement offer at internship completion.'
+          'Migrated 15+ Ab Initio workflows to Apache Spark-based pipelines.',
+          'Earned a Pre-Placement Offer (PPO) for internship performance.'
         ],
-        metrics: ['15+ ETL Jobs', 'PPO Offer'],
-        tools: ['Apache Spark', 'Python', 'Scala', 'Hadoop', 'Oozie', 'ETL']
+        tools: ['Scala', 'Apache Spark', 'Hadoop', 'Oracle']
       }
     ]
   }

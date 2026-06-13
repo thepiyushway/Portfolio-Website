@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MapPin } from 'lucide-react';
+import { ChevronDown, MapPin, TrendingUp } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { companyExperiences, type CompanyExperience } from '@/content/experience';
 import { skillCategories, skillsIntro } from '@/content/skills';
@@ -14,7 +14,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = `company-panel-${item.id}`;
-  const primaryRole = item.roles[0];
+  const primaryRole = item.roles[0]!;
   const allHighlights = item.roles.flatMap((role) => role.highlights);
   const allTools = Array.from(new Set(item.roles.flatMap((role) => role.tools)));
 
@@ -59,8 +59,14 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
             )}
           </div>
 
-          {/* Description */}
-          <p className="mt-2 text-sm leading-6 text-text-secondary">{primaryRole.summary}</p>
+          {/* Key Impact */}
+          <p className="mt-2 flex items-start gap-2 text-sm leading-6 text-text-secondary">
+            <TrendingUp size={16} className="mt-0.5 flex-shrink-0 text-emerald-600" aria-hidden="true" />
+            <span>
+              <span className="font-semibold text-emerald-700">Key Impact: </span>
+              {primaryRole.keyImpact}
+            </span>
+          </p>
         </div>
       </div>
 
@@ -88,7 +94,12 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="space-y-5 border-t border-slate-100 px-5 pb-5 pt-4">
+            <div className="space-y-5 border-t border-slate-100 px-4 pb-4 pt-4">
+              {/* Summary */}
+              <div>
+                <p className="text-sm leading-7 text-text-secondary">{primaryRole.summary}</p>
+              </div>
+
               {/* Highlights */}
               <div>
                 <SectionLabel>Highlights</SectionLabel>
