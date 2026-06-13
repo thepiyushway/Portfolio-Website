@@ -170,8 +170,8 @@ export function ExperienceSection() {
               {companyExperiences.map((item, index) => {
                 const [start, end] = item.period.split(' - ');
                 const isCurrent = end === 'Present';
-                const topLabel = isCurrent ? 'Present' : start;
-                const bottomLabel = isCurrent ? start : end;
+                const topLabel = isCurrent ? 'Present' : end;
+                const bottomLabel = start;
                 const isLast = index === companyExperiences.length - 1;
 
                 return (
