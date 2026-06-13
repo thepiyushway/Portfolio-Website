@@ -166,14 +166,16 @@ export function ExperienceSection() {
           </motion.div>
 
           {/* Professional Journey — right on desktop, top on mobile */}
-          <div className="order-1 lg:order-none">
+          <div className="order-1 lg:order-none pt-6">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold leading-tight text-text-primary sm:text-4xl">Professional Journey</h2>
+              <h2 className="border-l-4 border-brand-primary pl-3 sm:pl-4 text-3xl font-bold leading-tight text-text-primary sm:text-4xl">
+                Professional Journey
+              </h2>
             </motion.div>
 
             <div className="mt-8 space-y-5">

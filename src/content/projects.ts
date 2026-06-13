@@ -22,16 +22,6 @@ export const projects: Project[] = [
     github: 'https://github.com'
   },
   {
-    id: 'high-throughput-api-gateway',
-    title: 'High-Throughput API Gateway',
-    description: 'Architected a microservices gateway handling 100k+ RPS with 99.99% uptime for global fintech.',
-    tags: ['TypeScript', 'Kubernetes', 'Edge'],
-    impact: '99.99% uptime',
-    image: 'https://images.unsplash.com/photo-1526378723219-f3f0b6b8f56b?auto=format&fit=crop&w=900&q=80',
-    liveDemo: 'https://example.com',
-    github: 'https://github.com'
-  },
-  {
     id: 'real-time-data-analytics-platform',
     title: 'Real-Time Data Analytics Platform',
     description: 'Developed a platform for real-time data ingestion and visualization using Apache Kafka and Tableau.',
