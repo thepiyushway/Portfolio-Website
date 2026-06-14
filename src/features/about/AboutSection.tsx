@@ -141,7 +141,7 @@ export function AboutSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="transition-transform duration-150 hover:scale-110"
+                    className="rounded-md transition-transform duration-150 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                   >
                     <img src={logo} alt="" className={imgClass} />
                   </a>
@@ -150,9 +150,9 @@ export function AboutSection() {
 
               <a
                 href="#work"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-hover"
+                className="inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold text-brand-primary transition-colors hover:text-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
               >
-                View My Work <ArrowRight size={15} />
+                View My Work <ArrowRight size={15} aria-hidden="true" />
               </a>
             </div>
           </motion.div>

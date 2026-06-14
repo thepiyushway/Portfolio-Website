@@ -35,7 +35,7 @@ export function InstagramCard({
           {loading ? (
             <div className="h-full w-full animate-pulse bg-slate-200" />
           ) : image ? (
-            <img src={image} alt={title} className="h-full w-full object-contain" />
+            <img src={image} alt="" className="h-full w-full object-contain" />
           ) : (
             <FallbackGradient platform={post.platform} />
           )}

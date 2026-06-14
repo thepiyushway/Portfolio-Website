@@ -16,10 +16,10 @@ export function Footer() {
 
           {/* Right — nav + social icons */}
           <div className="flex flex-col items-center gap-2.5 sm:items-end">
-            <nav className="flex gap-5 text-sm font-medium text-slate-600">
-              <a href="#home"    className="transition-colors hover:text-brand-primary">Home</a>
-              <a href="#about"   className="transition-colors hover:text-brand-primary">About</a>
-              <a href="#work"    className="transition-colors hover:text-brand-primary">Work</a>
+            <nav aria-label="Footer" className="flex gap-5 text-sm font-medium text-slate-600">
+              <a href="#home"    className="rounded-sm transition-colors hover:text-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300">Home</a>
+              <a href="#about"   className="rounded-sm transition-colors hover:text-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300">About</a>
+              <a href="#work"    className="rounded-sm transition-colors hover:text-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300">Work</a>
             </nav>
 
             <div className="flex gap-3.5">
@@ -33,7 +33,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={name}
-                    className="transition-opacity hover:opacity-70"
+                    className="rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                   >
                     <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                   </a>

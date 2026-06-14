@@ -17,7 +17,7 @@ export function HeroCTA({ primary, secondary }: HeroCTAProps) {
   return (
     <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
       <Button href={primary.href} variant="primary" {...getLinkTargetProps(primary.href)}>
-        {primary.label} <ArrowRight size={16} />
+        {primary.label} <ArrowRight size={16} aria-hidden="true" />
       </Button>
       <Button href={secondary.href} variant="secondary" {...getLinkTargetProps(secondary.href)}>
         {secondary.label}
