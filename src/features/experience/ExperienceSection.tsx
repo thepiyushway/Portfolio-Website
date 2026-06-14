@@ -27,7 +27,7 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
       <div className="flex items-start gap-4 p-5">
         <img
           src={item.companyLogo}
-          alt={item.company}
+          alt={`${item.company} logo`}
           className="h-14 w-14 flex-shrink-0 border border-slate-100 bg-white object-contain"
           loading="lazy"
         />
@@ -35,9 +35,9 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
         <div className="min-w-0 flex-1">
           {/* Company name + location — primary row */}
           <div className="flex flex-wrap items-start justify-between gap-2">
-            <p className="text-xl font-bold leading-tight text-text-primary sm:text-2xl">{item.company}</p>
+            <h3 className="text-xl font-bold leading-tight text-text-primary sm:text-2xl">{item.company}</h3>
             <p className="hidden items-center gap-1 text-[14px] font-medium leading-snug text-text-muted md:inline-flex">
-              <MapPin size={14} className="flex-shrink-0 text-brand-primary" />
+              <MapPin size={14} aria-hidden="true" className="flex-shrink-0 text-brand-primary" />
               {item.location}
             </p>
           </div>
@@ -75,7 +75,8 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className="flex w-full items-center justify-center gap-1.5 border-t border-slate-100 text-xs font-semibold text-brand-primary transition hover:bg-surface-subtle"
+        aria-label={`${isOpen ? 'Hide' : 'Show'} details for ${item.company}`}
+        className="flex w-full items-center justify-center gap-1.5 border-t border-slate-100 text-xs font-semibold text-brand-primary transition hover:bg-surface-subtle focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-300"
       >
         <ChevronDown
           size={16}

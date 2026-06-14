@@ -26,6 +26,7 @@ export function Navbar() {
   const [active, setActive] = useState('home');
   const [contentOpen, setContentOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const contentTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 26);
@@ -41,13 +42,23 @@ export function Navbar() {
 
   useEffect(() => {
     if (!contentOpen) return;
-    const handler = (e: MouseEvent) => {
+    const handlePointer = (e: MouseEvent) => {
       if (contentRef.current && e.target instanceof Node && !contentRef.current.contains(e.target)) {
         setContentOpen(false);
       }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setContentOpen(false);
+        contentTriggerRef.current?.focus();
+      }
+    };
+    document.addEventListener('mousedown', handlePointer);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handlePointer);
+      document.removeEventListener('keydown', handleKey);
+    };
   }, [contentOpen]);
 
   const handleLinkClick = (value?: string) => {
@@ -63,8 +74,6 @@ export function Navbar() {
       className={`fixed left-4 right-4 top-3 z-50 rounded-2xl border border-white/40 bg-white/70 p-3 shadow-soft backdrop-blur-xl transition md:left-6 md:right-6 ${
         isScrolled ? 'shadow-glow' : ''
       }`}
-      role="navigation"
-      aria-label="Primary"
     >
       <div className="flex items-center justify-between gap-4">
         <a
@@ -85,7 +94,7 @@ export function Navbar() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => {
             const activeClass = active === link.id
               ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200'
@@ -95,7 +104,7 @@ export function Navbar() {
                 key={link.id}
                 href={link.href}
                 onClick={() => handleLinkClick(link.id)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${activeClass}`}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${activeClass}`}
                 aria-current={active === link.id ? 'page' : undefined}
               >
                 {link.label}
@@ -106,10 +115,12 @@ export function Navbar() {
           {/* Content dropdown */}
           <div className="relative" ref={contentRef}>
             <button
+              ref={contentTriggerRef}
               onClick={() => setContentOpen((prev) => !prev)}
-              className={`rounded-full px-4 py-2 !text-sm !font-medium !leading-5 transition ${
+              className={`rounded-full px-4 py-2 !text-sm !font-medium !leading-5 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${
                 contentOpen ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-200' : 'text-slate-600 hover:bg-blue-50 hover:text-brand-700'
               }`}
+              aria-haspopup="true"
               aria-expanded={contentOpen}
             >
               Content
@@ -134,7 +145,7 @@ export function Navbar() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => setContentOpen(false)}
-                        className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${color} ${bg} transition`}
+                        className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${color} ${bg} transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300`}
                       >
                         <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                         {name}
@@ -149,7 +160,7 @@ export function Navbar() {
           <div className="ml-2 flex items-center gap-2 border-l border-slate-200 pl-3">
             <a
               href={MAILTO_HREF}
-              className="inline-flex items-center justify-center rounded-xl bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-hover"
+              className="inline-flex items-center justify-center rounded-xl bg-brand-primary px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
             >
               Hire Me
             </a>
@@ -157,7 +168,7 @@ export function Navbar() {
               href={RESUME_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+              className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
             >
               Resume/CV
             </a>
@@ -165,17 +176,21 @@ export function Navbar() {
         </nav>
 
         <button
-          aria-label="Menu"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 md:hidden"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 md:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
       </div>
 
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
+            id="mobile-nav"
+            aria-label="Primary mobile"
             className="mt-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-soft md:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -188,7 +203,7 @@ export function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => handleLinkClick(link.id)}
-                    className="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50"
+                    className="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                   >
                     {link.label}
                   </a>
@@ -211,7 +226,7 @@ export function Navbar() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => setMobileOpen(false)}
-                        className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium ${color} ${bg} transition`}
+                        className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium ${color} ${bg} transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300`}
                       >
                         <img src={logo} alt="" className="h-4 w-4 rounded object-contain" />
                         {name}
@@ -224,7 +239,7 @@ export function Navbar() {
               <motion.li whileTap={{ scale: 0.97 }} className="mt-2 grid grid-cols-2 gap-2">
                 <a
                   href={MAILTO_HREF}
-                  className="inline-flex items-center justify-center rounded-xl bg-brand-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-hover"
+                  className="inline-flex items-center justify-center rounded-xl bg-brand-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                 >
                   Hire Me
                 </a>
@@ -232,7 +247,7 @@ export function Navbar() {
                   href={RESUME_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+                  className="inline-flex items-center justify-center rounded-xl border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
                 >
                   Resume/CV
                 </a>

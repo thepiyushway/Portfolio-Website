@@ -99,10 +99,30 @@ function App() {
     );
   }, [activeView]);
 
+  // Move focus to <main> without mutating the hash — the hash drives routing
+  // here, so writing "#main-content" would reset the active view to "home".
+  const handleSkip = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const main = document.getElementById('main-content');
+    if (main) {
+      main.focus();
+      main.scrollIntoView();
+    }
+  };
+
   return (
     <div className="flex min-h-screen scroll-smooth flex-col bg-grid-pattern bg-grid-offset bg-no-repeat">
+      <a
+        href="#main-content"
+        onClick={handleSkip}
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-primary focus:shadow-elevated focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-brand-300"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      <main className="flex-1">{content}</main>
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+        {content}
+      </main>
       <Footer />
     </div>
   );

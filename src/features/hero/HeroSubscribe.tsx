@@ -86,15 +86,16 @@ export function HeroSubscribe({ config }: HeroSubscribeProps) {
               }
             }}
             placeholder={placeholder}
-            aria-label="Email address"
+            aria-describedby="hero-email-status"
             aria-invalid={status === 'invalid_email' || status === 'error'}
             disabled={isSubmitting}
             required
           />
           <p
+            id="hero-email-status"
             role="status"
             aria-live="polite"
-            className={cn('mt-2 text-xs', message ? (TONE_BY_STATUS[status] ?? 'text-slate-400') : 'text-slate-400')}
+            className={cn('mt-2 text-xs', message ? (TONE_BY_STATUS[status] ?? 'text-slate-500') : 'text-slate-500')}
           >
             {message ?? helperText}
           </p>

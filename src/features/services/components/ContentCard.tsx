@@ -40,7 +40,7 @@ export function Stats({ stats }: { stats: readonly StatItem[] }) {
     <div className="flex items-center gap-4">
       {stats.map(({ icon: StatIcon, value }) => (
         <span key={value} className="flex items-center gap-1 text-xs text-slate-500">
-          <StatIcon size={13} className="shrink-0" />
+          <StatIcon size={13} aria-hidden="true" className="shrink-0" />
           {value}
         </span>
       ))}
@@ -92,13 +92,13 @@ export function ContentCard({
           <>
             <img
               src={src}
-              alt={title}
+              alt=""
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             {isYouTube && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600/90 shadow-lg backdrop-blur-sm transition-transform duration-200 group-hover:scale-110">
-                  <Play size={16} className="translate-x-0.5 fill-white text-white" />
+                  <Play size={16} aria-hidden="true" className="translate-x-0.5 fill-white text-white" />
                 </span>
               </div>
             )}
