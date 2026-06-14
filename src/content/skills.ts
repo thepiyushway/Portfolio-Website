@@ -10,28 +10,28 @@ export const skillsIntro =
 
 export const skillCategories: SkillCategory[] = [
   {
-    id: 'frontend',
-    category: 'Frontend',
-    skills: ['React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS']
-  },
-  {
     id: 'backend',
     category: 'Backend',
     skills: ['Python', 'FastAPI', 'REST APIs', 'GraphQL', 'Microservices', 'System Design']
   },
   {
-    id: 'cloud-monitoring',
-    category: 'Cloud & Monitoring',
-    skills: ['Azure', 'AWS', 'Docker', 'Kubernetes', 'Prometheus', 'Grafana']
-  },
-  {
-    id: 'databases',
-    category: 'Databases',
-    skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Cassandra']
+    id: 'frontend',
+    category: 'Frontend',
+    skills: ['React', 'TypeScript', 'JavaScript', 'HTML5', 'Tailwind CSS']
   },
   {
     id: 'ai-engineering',
     category: 'AI Engineering',
-    skills: ['LLM Applications', 'RAG', 'AI Agents', 'LangChain', 'OpenAI APIs', 'Prompt Engineering']
+    skills: ['LLM Applications', 'RAG', 'AI Agents', 'MCP', 'LangChain', 'OpenAI APIs', 'Context Engineering', 'Agentic Workflows']
+  },
+  {
+    id: 'databases',
+    category: 'Databases',
+    skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Cassandra', 'DynamoDB', 'Elasticsearch', 'Firebase Realtime DB', 'Vector DB (Pinecone)']
+  },
+  {
+    id: 'cloud-monitoring',
+    category: 'Cloud & Monitoring',
+    skills: ['Azure', 'AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Prometheus', 'Grafana']
   }
 ];
