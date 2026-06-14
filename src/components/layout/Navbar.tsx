@@ -6,7 +6,7 @@ import { socials } from '@/content/site';
 import { SOCIAL_LOGOS, type SocialId } from '@/lib/socials';
 
 const MAILTO_HREF = 'mailto:thepiyushway@gmail.com?subject=Let\'s%20Work%20Together&body=Hi%20Piyush%2C%0A%0AI\'d%20love%20to%20discuss%20a%20potential%20collaboration.%0A%0ABest%20regards';
-const RESUME_HREF = 'https://www.linkedin.com/in/thepiyushway/';
+const RESUME_HREF = '/Resume-PiyushSharma.pdf';
 
 const SOCIAL_STYLE_MAP = {
   youtube:   { color: 'text-red-500',   bg: 'hover:bg-red-50' },
