@@ -21,13 +21,12 @@ const TONE_BY_STATUS: Partial<Record<Status, string>> = {
 };
 
 export function HeroSubscribe({ config }: HeroSubscribeProps) {
-  const { label, placeholder, helperText, idleLabel, submittingLabel, successLabel, messages } = config;
+  const { label, placeholder, helperText, idleLabel, submittingLabel, messages } = config;
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const resetTimer = useRef<number | undefined>(undefined);
 
   const isSubmitting = status === 'submitting';
-  const isDone = status === 'subscribed' || status === 'already_subscribed';
 
   const message =
     status === 'subscribed'
@@ -40,7 +39,7 @@ export function HeroSubscribe({ config }: HeroSubscribeProps) {
             ? messages.error
             : null;
 
-  const buttonLabel = isSubmitting ? submittingLabel : isDone ? successLabel : idleLabel;
+  const buttonLabel = isSubmitting ? submittingLabel : idleLabel;
 
   const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
