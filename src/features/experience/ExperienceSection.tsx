@@ -129,9 +129,18 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
 function SkillsPanel() {
   return (
     <div>
-      <h3 className="border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Skills</h3>
+      <div className="lg:mt-16 w-full max-w-[450px] lg:max-w-[480px]">
+        <img
+          src="/images/skills-photo.jpg"
+          alt="Piyush Sharma"
+          className="aspect-[4/2.5] w-full rounded-lg object-cover shadow-soft"
+          loading="lazy"
+        />
+      </div>
 
-      <p className="mt-4 text-sm leading-7 text-text-secondary">{skillsIntro}</p>
+      <p className="mt-6 text-sm leading-7 text-text-secondary">{skillsIntro}</p>
+
+      <h3 className="mt-6 border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Skills</h3>
 
       <div className="mt-6 space-y-4">
         {skillCategories.map((category) => (
