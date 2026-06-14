@@ -43,7 +43,7 @@ export function HeroSection() {
             <div className="relative overflow-hidden rounded-xl bg-surface-base">
               <img
                 src={hero.avatar}
-                alt="Profile"
+                alt="Piyush Sharma, Software Engineer and AI Consultant"
                 loading="lazy"
                 className="h-72 w-full object-cover object-top transition duration-500 hover:scale-105 sm:h-96 lg:h-120"
               />
