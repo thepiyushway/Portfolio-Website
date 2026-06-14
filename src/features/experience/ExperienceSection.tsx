@@ -162,17 +162,23 @@ export function ExperienceSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,99,194,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.09),transparent_32%)]" />
 
       <div className="section-wrapper relative">
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-8">
-          {/* Expertise — left on desktop, below journey on mobile */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="order-2 lg:order-none lg:sticky lg:top-24 lg:self-start"
-          >
-            <SkillsPanel />
-          </motion.div>
+        <div className="grid gap-10 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-8">
+          {/* Expertise — left on desktop, below journey on mobile.
+              The grid cell stretches to the full row height (no self-start) so it acts as
+              a tall containing block; the inner div is the actual sticky element. Expanding
+              a journey card only adds room below the pinned panel, so it never shifts. */}
+          <div className="order-2 lg:order-none">
+            <div className="lg:sticky lg:top-24">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <SkillsPanel />
+              </motion.div>
+            </div>
+          </div>
 
           {/* Professional Journey — right on desktop, top on mobile */}
           <div className="order-1 lg:order-none pt-6">
