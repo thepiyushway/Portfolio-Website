@@ -36,7 +36,7 @@ function CompanyCard({ item, isCurrent }: { item: CompanyExperience; isCurrent: 
           {/* Company name + location — primary row */}
           <div className="flex flex-wrap items-start justify-between gap-2">
             <p className="text-xl font-bold leading-tight text-text-primary sm:text-2xl">{item.company}</p>
-            <p className="inline-flex items-center gap-1 text-[14px] font-medium leading-snug text-text-muted">
+            <p className="hidden items-center gap-1 text-[14px] font-medium leading-snug text-text-muted md:inline-flex">
               <MapPin size={14} className="flex-shrink-0 text-brand-primary" />
               {item.location}
             </p>
