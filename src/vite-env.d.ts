@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_YOUTUBE_API_KEY?: string;
+  readonly VITE_SUBSCRIBE_ENDPOINT?: string;
 }
 
 interface ImportMeta {

@@ -150,7 +150,14 @@ export const siteConfig = {
       placeholder: 'Enter your e-mail',
       helperText: 'No Spam. I hate it more than you do.',
       idleLabel: 'Subscribe',
-      successLabel: 'Thank You! :)'
+      submittingLabel: 'Subscribing…',
+      successLabel: 'Thank You! :)',
+      messages: {
+        success: "You're on the list — thanks for subscribing! 🎉",
+        already: "You're already subscribed. Thanks for the love! :)",
+        invalid: 'Please enter a valid email address.',
+        error: 'Something went wrong. Please try again in a moment.'
+      }
     }
   }
 };

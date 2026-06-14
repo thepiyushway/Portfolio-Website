@@ -37,7 +37,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 };
 
 const baseClass =
-  'inline-flex items-center justify-center gap-2 rounded-xl transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2';
+  'inline-flex items-center justify-center gap-2 rounded-xl transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-60';
 
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ children, className, variant = 'primary', size = 'md', ...props }, ref) => {

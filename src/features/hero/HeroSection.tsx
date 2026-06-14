@@ -50,13 +50,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <HeroSubscribe
-            label={hero.subscribe.label}
-            placeholder={hero.subscribe.placeholder}
-            helperText={hero.subscribe.helperText}
-            idleLabel={hero.subscribe.idleLabel}
-            successLabel={hero.subscribe.successLabel}
-          />
+          <HeroSubscribe config={hero.subscribe} />
         </motion.div>
       </SectionWrapper>
     </section>
