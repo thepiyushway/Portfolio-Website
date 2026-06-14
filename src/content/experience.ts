@@ -33,14 +33,14 @@ export const companyExperiences: CompanyExperience[] = [
         period: 'Jan 2025 - Present',
         employmentType: 'Full-time',
         track: 'Microsoft Teams',
-        summary: 'Joined Microsoft Teams as a Full Stack Developer, building user-facing and platform capabilities for collaboration workflows.',
-        keyImpact: 'Enhanced collaboration experience for millions of Teams users through scalable feature delivery.',
+        summary: 'Joined Microsoft Teams as a Full-Stack Engineer, delivering customer-facing features, owning live-site reliability and incident management, and pioneering AI-driven development through custom agents, MCPs, skills, and internal engineering tools.',
+        keyImpact: 'Drove reliability, feature delivery, and operational excellence across Teams Events by shipping 8+ major features, reducing active incidents by 58%, and building AI-powered tooling that accelerated debugging and developer productivity.',
         highlights: [
-          'Building product features across frontend and backend systems for Microsoft Teams.',
-          'Collaborating with cross-functional stakeholders to improve user experience and delivery velocity.',
-          'Driving production-quality implementation with reliability and maintainability as core engineering goals.'
+          'Delivered 8+ customer-facing features and platform enhancements across frontend and backend, including Event Access Policies, Sensitivity Label Enforcement, Upgrade UX, Co-location support, Zoom integrations, and Attendance Reports.',
+          'Led DRI and live-site operations across OneEvents, enhancing monitoring, telemetry, dashboards, and incident response processes while reducing active incidents by 58%',
+          'Created 4+ AI-native tools and workflows (agents, MCPs, skills) to streamline engineering operations, reduce investigation effort and accelerate software delivery.'
         ],
-        tools: ['React.js', 'TypeScript', 'Node.js', 'Distributed Systems', 'REST APIs', 'Azure']
+        tools: ['React.js', 'TypeScript', 'GraphQL', 'REST APIs', 'Generative AI', 'OOPS', 'Microsoft Azure']
       }
     ]
   },
