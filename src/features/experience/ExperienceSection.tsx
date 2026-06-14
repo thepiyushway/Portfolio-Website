@@ -173,7 +173,7 @@ export function ExperienceSection() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="border-l-4 border-brand-primary pl-3 sm:pl-4 text-3xl font-bold leading-tight text-text-primary sm:text-4xl">
+              <h2 className="border-l-4 border-brand-primary pl-3 sm:pl-4 text-3xl font-bold leading-tight text-text-primary sm:text-4xl lg:translate-x-12">
                 Professional Journey
               </h2>
             </motion.div>
