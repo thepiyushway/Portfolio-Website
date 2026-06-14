@@ -5,7 +5,8 @@ import { HeroSection } from '@/features/hero/HeroSection';
 import { TestimonialsSection } from '@/features/testimonials/TestimonialsSection';
 import { AboutSection } from '@/features/about/AboutSection';
 import { ExperienceSection } from '@/features/experience/ExperienceSection';
-import { ProjectsSection } from '@/features/projects/ProjectsSection';
+// Temporarily hidden until we have featured projects to show.
+// import { ProjectsSection } from '@/features/projects/ProjectsSection';
 import { ServicesSection } from '@/features/services/ServicesSection';
 import { navLinks, type ViewId } from '@/content/navigation';
 
@@ -44,7 +45,8 @@ function App() {
       return (
         <>
           <ExperienceSection />
-          <ProjectsSection />
+          {/* Temporarily hidden until we have featured projects to show. */}
+          {/* <ProjectsSection /> */}
         </>
       );
     }
