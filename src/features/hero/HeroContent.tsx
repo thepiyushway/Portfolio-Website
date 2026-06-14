@@ -29,6 +29,7 @@ export function HeroContent({ availabilityLabel, headingLines, tagline }: HeroCo
       </motion.div>
 
       <motion.h1 variants={fadeInUp} className="mb-6 text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+        <span className="sr-only">Piyush Sharma — </span>
         {headingLines.map((line) => (
           <span key={line.text} className={`block ${headingToneClass[line.tone]}`}>
             {line.text}

@@ -140,7 +140,7 @@ function SkillsPanel() {
 
       <p className="mt-6 text-sm leading-7 text-text-secondary">{skillsIntro}</p>
 
-      <h3 className="mt-6 border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Skills</h3>
+      <h2 className="mt-6 border-l-4 border-brand-primary pl-3 text-xl font-bold text-text-primary">Skills</h2>
 
       <div className="mt-6 space-y-4">
         {skillCategories.map((category) => (
@@ -162,11 +162,8 @@ export function ExperienceSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,99,194,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.09),transparent_32%)]" />
 
       <div className="section-wrapper relative">
+        <h1 className="sr-only">Work &amp; Experience — Piyush Sharma</h1>
         <div className="grid gap-10 lg:grid-cols-[420px_minmax(0,1fr)] lg:gap-8">
-          {/* Expertise — left on desktop, below journey on mobile.
-              The grid cell stretches to the full row height (no self-start) so it acts as
-              a tall containing block; the inner div is the actual sticky element. Expanding
-              a journey card only adds room below the pinned panel, so it never shifts. */}
           <div className="order-2 lg:order-none">
             <div className="lg:sticky lg:top-24">
               <motion.div

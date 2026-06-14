@@ -58,13 +58,12 @@ export function AboutSection() {
                 AI STRATEGIST
               </span>
             </div>
-            <h2 className="text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
+            <h1 className="text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
               Hey! I'm{' '}
               <span className="text-brand-primary">Piyush Sharma</span>
-            </h2>
+            </h1>
           </div>
 
-          {/* Photo */}
           <motion.div
             className="h-full"
             initial={{ opacity: 0, x: -24 }}
@@ -90,7 +89,6 @@ export function AboutSection() {
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.55, delay: 0.12 }}
           >
-            {/* Availability badges + Heading — desktop only */}
             <div className="hidden lg:block">
               <div className="mb-5 flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
@@ -101,10 +99,10 @@ export function AboutSection() {
                   AI STRATEGIST
                 </span>
               </div>
-              <h2 className="mb-6 text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
+              <h1 className="mb-6 text-4xl font-bold leading-tight text-text-primary sm:text-5xl">
                 Hey! I'm{' '}
                 <span className="text-brand-primary">Piyush Sharma</span>
-              </h2>
+              </h1>
             </div>
 
             {/* Bio */}
