@@ -1,5 +1,6 @@
+import { useState, type PointerEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Pause, Play, Star } from 'lucide-react';
 import { testimonialFeed, type Testimonial } from '@/content/testimonials';
 import { Card } from '@/components/ui/Card';
 import { useTestimonials } from './hooks/useTestimonials';
@@ -68,12 +69,35 @@ export function TestimonialsSection() {
   const feed = useTestimonials(testimonialFeed);
   const doubledFeed = [...feed, ...feed];
 
+  // Explicit, persistent pause (WCAG 2.2.2) — the only way to stop the motion
+  // on touch devices, which have no hover.
+  const [isPaused, setIsPaused] = useState(false);
+  // Transient pause while a finger is held on the track (press-and-hold to read).
+  const [isHeld, setIsHeld] = useState(false);
+
+  const holdStart = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse') setIsHeld(true);
+  };
+  const holdEnd = () => setIsHeld(false);
+
   return (
     <section id="testimonials" className="bg-slate-50 py-1.5">
       <div className="section-wrapper testimonials-section-wrapper py-1.5 md:py-2">
         <h2 className="mb-4 text-center text-3xl font-bold text-slate-900">What My Mentees and Colleagues Say</h2>
-        <div className="relative overflow-hidden">
-          <div className="testimonial-track flex w-max gap-6 pr-6 pb-4">
+        {/* A single marquee serves every breakpoint, so mobile rotates through
+            the full feed exactly like desktop does. */}
+        <div
+          className="testimonial-viewport relative overflow-hidden"
+          onPointerDown={holdStart}
+          onPointerUp={holdEnd}
+          onPointerCancel={holdEnd}
+          onPointerLeave={holdEnd}
+        >
+          <div
+            id="testimonial-track"
+            data-paused={isPaused || isHeld}
+            className="testimonial-track flex w-max gap-4 pr-4 pb-4 sm:gap-6 sm:pr-6"
+          >
             {doubledFeed.map((item, index) => {
               // The feed is doubled so the marquee can loop seamlessly. Only the
               // first copy is exposed to assistive tech; the clones are hidden so
@@ -85,22 +109,27 @@ export function TestimonialsSection() {
                   aria-hidden={isClone || undefined}
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.25 }}
-                  className="w-80 shrink-0 sm:w-96 h-76"
+                  className={`testimonial-item w-72 shrink-0 sm:w-96 h-76${isClone ? ' testimonial-clone' : ''}`}
                 >
-                  <TestimonialCard item={item} colorIndex={index % testimonialFeed.length} />
+                  {/* Color follows position within the live feed (not the static
+                      fallback) so each clone matches its original. */}
+                  <TestimonialCard item={item} colorIndex={index % feed.length} />
                 </motion.div>
               );
             })}
           </div>
         </div>
 
-        {/* Mobile fallback: the marquee is display:none below 768px, so this grid
-            is the only testimonial content small-screen (incl. screen reader)
-            users get — it must stay in the accessibility tree. */}
-        <div className="mt-8 grid gap-6 md:hidden">
-          {feed.slice(0, 3).map((item, index) => (
-            <TestimonialCard key={item.id} item={item} colorIndex={index} />
-          ))}
+        <div className="mt-2 flex justify-center motion-reduce:hidden">
+          <button
+            type="button"
+            onClick={() => setIsPaused((p) => !p)}
+            aria-controls="testimonial-track"
+            aria-label={isPaused ? 'Play testimonials' : 'Pause testimonials'}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+          >
+            {isPaused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
+          </button>
         </div>
 
         <p className="text-center text-sm text-slate-500 py-2">

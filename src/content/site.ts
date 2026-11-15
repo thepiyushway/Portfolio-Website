@@ -101,7 +101,7 @@ export const siteConfig = {
     avatar: '/images/profile.jpg',
     stats: [
       { value: `${getCompletedYears(careerStartDate)}+`, label: 'Years of Experience' },
-      { value: '600+', label: 'Students Mentored' },
+      { value: '1,000+', label: 'Students Mentored' },
       { value: '50+', label: 'Projects Shipped' }
     ] satisfies HeroStat[],
     workedWith: [
