@@ -22,7 +22,7 @@ const VIEW_META: Record<ViewId, { title: string; description: string }> = {
   home: {
     title: 'Piyush Sharma : Software Engineer, AI Consultant & Tech Educator',
     description:
-      'Piyush Sharma : Software Engineer, AI Consultant & Educator building scalable full-stack systems, shipping production-grade AI, and mentoring 600+ engineers.',
+      'Piyush Sharma : Software Engineer, AI Consultant & Educator building scalable full-stack systems, shipping production-grade AI, and mentoring 1,000+ engineers.',
   },
   about: {
     title: 'About Piyush Sharma : Engineer, AI Consultant & Educator',

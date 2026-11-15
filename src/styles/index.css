@@ -65,23 +65,39 @@ textarea {
   animation: testimonial-marquee 160s linear infinite;
 }
 
-.testimonial-track:hover {
+/* Explicit pause (button) or press-and-hold on touch. */
+.testimonial-track[data-paused='true'] {
   animation-play-state: paused;
 }
 
-@media (max-width: 767px) {
-  .testimonial-track {
-    display: none;
+/* Hover-to-pause only where hover genuinely exists; on touch screens :hover
+   "sticks" after a tap and would freeze the marquee unexpectedly. */
+@media (hover: hover) {
+  .testimonial-track:hover {
+    animation-play-state: paused;
   }
 }
 
+/* Reduced motion: no auto-scroll. Show each testimonial once in a
+   swipeable, snap-scrolling row instead. */
 @media (prefers-reduced-motion: reduce) {
+  .testimonial-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .testimonial-track {
     animation: none;
     transform: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
+  }
+
+  .testimonial-item {
+    scroll-snap-align: start;
+  }
+
+  .testimonial-clone {
+    display: none;
   }
 }
 
