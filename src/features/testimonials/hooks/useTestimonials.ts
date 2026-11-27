@@ -40,15 +40,27 @@ function parseSheet(text: string): Testimonial[] {
   });
 }
 
+// Randomised per page load so every visit leads with different reviews instead
+// of always the first rows. Reviews with written feedback stay ahead of blank
+// ones so a "No written feedback" card never opens the marquee.
+function shuffleFeed(items: Testimonial[]): Testimonial[] {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j]!, shuffled[i]!];
+  }
+  return [...shuffled.filter((t) => t.quote), ...shuffled.filter((t) => !t.quote)];
+}
+
 export function useTestimonials(fallback: Testimonial[]): Testimonial[] {
-  const [data, setData] = useState<Testimonial[]>(fallback);
+  const [data, setData] = useState<Testimonial[]>(() => shuffleFeed(fallback));
 
   useEffect(() => {
     fetch(GVIZ_URL)
       .then((r) => r.text())
       .then((text) => {
         const parsed = parseSheet(text);
-        if (parsed.length > 0) setData(parsed);
+        if (parsed.length > 0) setData(shuffleFeed(parsed));
       })
       .catch(() => undefined);
   }, []);
